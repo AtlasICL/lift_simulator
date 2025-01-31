@@ -15,8 +15,10 @@ class Lift:
         move
 
     """
-    
+
     current_position: int
     num_floors: int
     queue: Queue
+
+    pass
 
