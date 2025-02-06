@@ -1,3 +1,5 @@
+import json
+
 class Request:
     """
     Request class denotes an individual request. A request is someone calling the lift.
@@ -15,6 +17,10 @@ class Request:
     of the number of floors in the building as initially specified.
     
     """
+
+    with open('sources/config.json', 'r') as f:
+        data = json.load(f)
+    print(data["floors"])
     
     origin_floor: int
     destination_floor: int
