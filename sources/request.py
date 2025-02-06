@@ -1,6 +1,7 @@
 import json
 
 class Request:
+    
     """
     Request class denotes an individual request. A request is someone calling the lift.
     In our simulation, someone calling the lift indicates which floor they would like to go to.
@@ -20,7 +21,8 @@ class Request:
 
     with open('sources/config.json', 'r') as f:
         data = json.load(f)
-    print(data["floors"])
+
+    NUM_FLOORS: int = (data["floors"])
     
     origin_floor: int
     destination_floor: int
@@ -31,4 +33,11 @@ class Request:
 
     def print(self) -> None:
         print(f"REQ | o: {self.origin_floor}; d: {self.destination_floor}")
+    
+    def valid_request(NUM_FLOORS, destination_floor, origin_floor) -> bool:
+        if (destination_floor > NUM_FLOORS) or (destination_floor == origin_floor) or (destination_floor < NUM_FLOORS):
+            return False   
+        else:
+            return True 
+        
     
