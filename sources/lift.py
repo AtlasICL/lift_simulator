@@ -21,6 +21,13 @@ class Lift:
     destination: int
     queue: Queue
 
+    def __init__(self, building_floor_count: int):
+        self.NUMBER_OF_FLOORS = building_floor_count
+        self.current_position = 0
+        self.destination = 0
+        self.queue = Queue()
+        
+
     def print(self) -> None:
         """
         debugging function
@@ -31,7 +38,7 @@ class Lift:
         print(f"QUEUE OF REQS: {self.queue}")
         print("--------")
 
-    
+
 
     pass
 

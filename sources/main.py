@@ -1,7 +1,14 @@
-from lift import Lift
+import lift
+from queue import Queue
+from request import Request
+
 
 def main():
-    pass
+    Lift = lift.Lift(10)
+    Lift.print()
+
 
 if __name__ == "__main__":
     main()
+
+
