@@ -21,8 +21,7 @@ class Lift:
     destination: int
     queue: Queue
 
-    def __init__(self, building_floor_count: int):
-        self.NUMBER_OF_FLOORS = building_floor_count
+    def __init__(self):
         self.current_position = 0
         self.destination = 0
         self.queue = Queue()
@@ -36,7 +35,7 @@ class Lift:
         print("--LIFT--")
         print(f"FLOOR: {self.current_position}")
         print(f"QUEUE OF REQS: {self.queue}")
-        for request in self.queue.requests:
+        for request in self.queue.get_requests():
             request.print()
         print("--------")
 
