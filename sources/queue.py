@@ -17,9 +17,9 @@ class Queue:
     
     requests: list[Request]
 
-    def __init__(self):
-        # empty constructor
-        pass        
+    # def __init__(self):
+    #     # empty constructor
+    #     pass        
 
     def add_request(self, req: Request) -> None:
         self.requests.append(req)

@@ -26,7 +26,7 @@ class Lift:
         self.current_position = 0
         self.destination = 0
         self.queue = Queue()
-        
+
 
     def print(self) -> None:
         """
@@ -36,6 +36,8 @@ class Lift:
         print("--LIFT--")
         print(f"FLOOR: {self.current_position}")
         print(f"QUEUE OF REQS: {self.queue}")
+        for request in self.queue.requests:
+            request.print()
         print("--------")
 
 
