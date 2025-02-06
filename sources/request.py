@@ -21,17 +21,18 @@ class Request:
 
     # Read in the number of floors in the building from config.json
     # and store in NUM_FLOORS variable
-    with open('sources/config.json', 'r') as f:
-        data = json.load(f)
 
-    NUM_FLOORS: int = (data["floors"])
     
     origin_floor: int
     destination_floor: int
+    NUM_FLOORS: int
 
     def __init__(self, origin: int, destination: int):
         self.origin_floor = origin
         self.destination_floor = destination
+        with open('sources/config.json', 'r') as f:
+            data = json.load(f)
+        self.NUM_FLOORS: int = (data["floors"])
 
     def print(self) -> None:
         print(f"REQ | o: {self.origin_floor}; d: {self.destination_floor}")
