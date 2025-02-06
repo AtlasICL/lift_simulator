@@ -1,8 +1,9 @@
 from queue import Queue
+from request import Request
 
 class Lift:
     """
-    Lift class. Represents one particular lift. 
+    Lift class. Represents one instance of a lift. 
 
     Attributes:
         current_position: int - indicates the current floor of the lift.
@@ -13,12 +14,24 @@ class Lift:
         constructor
         find_next_destination
         move
-
     """
 
+    NUMBER_OF_FLOORS: int
     current_position: int
-    num_floors: int
+    destination: int
     queue: Queue
+
+    def print(self) -> None:
+        """
+        debugging function
+        prints current info about lift instance
+        """
+        print("--LIFT--")
+        print(f"FLOOR: {self.current_position}")
+        print(f"QUEUE OF REQS: {self.queue}")
+        print("--------")
+
+    
 
     pass
 
