@@ -45,4 +45,10 @@ class Request:
             return False
         return True
         
+    def is_upward(self) -> bool:
+        return self.destination_floor > self.origin_floor
+    
+    def is_downward(self) -> bool:
+        return self.destination_floor < self.origin_floor
+    
     
