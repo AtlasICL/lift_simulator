@@ -1,6 +1,7 @@
 import lift
-from queue import Queue
+from req_queue import Queue
 from request import Request
+
 
 
 def main():
@@ -12,9 +13,12 @@ def main():
     request4 = Request(4, 2)
     request5 = Request(5, 1)
 
+    example_requests = [request1, request2, request3, request4, request5]
+
     Lift.print()
 
-    Lift.queue.add_request(request1)
+    for req in example_requests:
+        Lift.queue.add_request(req)
 
     Lift.print()
 
