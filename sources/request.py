@@ -19,6 +19,8 @@ class Request:
     
     """
 
+    # Read in the number of floors in the building from config.json
+    # and store in NUM_FLOORS variable
     with open('sources/config.json', 'r') as f:
         data = json.load(f)
 
@@ -34,10 +36,13 @@ class Request:
     def print(self) -> None:
         print(f"REQ | o: {self.origin_floor}; d: {self.destination_floor}")
     
-    def valid_request(NUM_FLOORS, destination_floor, origin_floor) -> bool:
-        if (destination_floor > NUM_FLOORS) or (destination_floor == origin_floor) or (destination_floor < NUM_FLOORS):
-            return False   
-        else:
-            return True 
+    def valid_request(self, origin_floor: int, destination_floor: int) -> bool:
+        if destination_floor > self.NUM_FLOORS:
+            return False
+        if origin_floor < 0:
+            return False
+        if origin_floor == destination_floor:
+            return False
+        return True
         
     
