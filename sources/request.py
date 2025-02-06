@@ -33,11 +33,14 @@ class Request:
         with open('sources/config.json', 'r') as f:
             data = json.load(f)
         self.NUM_FLOORS: int = (data["floors"])
+        # TODO: constructor should use is_valid_request() function
+        # to check that the instance of request being initialised
+        # is valid
 
     def print(self) -> None:
         print(f"REQ | o: {self.origin_floor}; d: {self.destination_floor}")
     
-    def valid_request(self, origin_floor: int, destination_floor: int) -> bool:
+    def is_valid_request(self, origin_floor: int, destination_floor: int) -> bool:
         if destination_floor > self.NUM_FLOORS:
             return False
         if origin_floor < 0:
