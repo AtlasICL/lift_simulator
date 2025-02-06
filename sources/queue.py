@@ -27,6 +27,13 @@ class Queue:
     def remove_request(self, req: Request) -> None:
         self.requests.remove(req)
 
-    
+    def remove_duplicate_requests(self) -> list[Request]:
+        unique_requests = []
+        seen = set()
+        for req in self.requests:
+            if req not in seen:
+                unique_requests.append(req)
+                seen.add(req)
+        return unique_requests
 
     
