@@ -1,6 +1,6 @@
 from request import Request
 
-class Queue:
+class ReqQueue:
     """
     Queue class, which stores the queue of requests for a particular instance of a lift.
 

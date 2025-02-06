@@ -1,7 +1,5 @@
 import lift
-from req_queue import Queue
 from request import Request
-
 
 
 def main():
