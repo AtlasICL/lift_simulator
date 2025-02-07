@@ -17,7 +17,7 @@ def main():
 
     MAX_FLOOR: int = read_config() - 1 # we are starting from floor 0, hence the - 1
 
-    random_requests = generate_random_requests(n_requests=10, max_floor=MAX_FLOOR, seed=42)
+    random_requests = generate_random_requests(n_requests=10, max_floor=MAX_FLOOR)
     
     Lift = lift.Lift()
 
