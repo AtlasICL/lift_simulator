@@ -1,4 +1,4 @@
-from queue import Queue
+from req_queue import ReqQueue
 from request import Request
 
 class Lift:
@@ -19,12 +19,12 @@ class Lift:
     NUMBER_OF_FLOORS: int
     current_position: int
     destination: int
-    queue: Queue
+    queue: ReqQueue
 
     def __init__(self):
         self.current_position = 0
         self.destination = 0
-        self.queue = Queue()
+        self.queue = ReqQueue()
 
 
     def print(self) -> None:

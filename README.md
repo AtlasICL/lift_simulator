@@ -11,3 +11,5 @@
 - Emre Acarsoy, ea616@exeter.ac.uk
 
 ---
+
+Planning doc [here](https://docs.google.com/document/d/1w2EVh6PWvX_E1wdaU_rfJLCLgPSFd_8Gg-qB1Bz4LDg/edit?usp=sharing)
