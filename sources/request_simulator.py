@@ -2,19 +2,17 @@ import random
 
 from request import Request
 
-def generate_random_requests(n_requests: int, max_floor: int) -> list[Request]:
-    """
-    Function to generate random pairs, to simulate requests.
-    """
+def simulate_requests(n_requests: int, max_floor: int) -> list[Request]:
+    """Generate random requests with floors between 1 and max_floor."""
     requests = []
     for _ in range(n_requests):
-        # prevent start_floor == end_floor in generation:
-        start_floor = random.randint(0, max_floor-1)
-        end_floor = random.randint(0, max_floor-1)
+        start_floor = random.randint(1, max_floor)
+        end_floor = random.randint(1, max_floor)
 
+        # Ensure start and end are different.
         while end_floor == start_floor:
-            end_floor = random.randint(0, max_floor-1)
+            end_floor = random.randint(1, max_floor)
         
-        req = Request(start_floor, end_floor)
+        req = Request(start_floor, end_floor, total_floors=max_floor)
         requests.append(req)
     return requests

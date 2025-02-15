@@ -1,4 +1,6 @@
 {
-    "floors": 10
+    "total_floors": 10,
+    "capacity": 5,
+    "num_requests": 20
 }
   
