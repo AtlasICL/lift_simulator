@@ -3,63 +3,76 @@ from request import Request
 import time
 
 class Lift:
-    """
-    Lift class that simulates the behavior of an elevator.
-    
-    Attributes:
-        current_floor (int): The floor where the lift is currently located.
-        total_floors (int): The total number of floors in the building.
-        capacity (int): Maximum number of requests (or passengers) the lift can handle at once.
-        request_queue (ReqQueue): A custom queue storing the lift's requests.
-        direction (str | None): The current direction of the lift ("up", "down", or None when idle).
-        visited_floors (list[int]): Tracks floors that the lift has visited.
-    
-    Methods:
-        add_request: Adds a new request to the queue.
-        next_stop: Determines the next floor to move to based on the pending requests.
-        move: Moves the lift one floor at a time towards the next stop and handles arrival logic.
-    """
     def __init__(self, total_floors: int, capacity: int):
         self.current_floor = 1          # Start at floor 1
         self.total_floors = total_floors
         self.capacity = capacity
-        self.request_queue = ReqQueue()
-        self.direction = None           # "up", "down", or None when idle
-        self.visited_floors = []        # Keep track of floors the lift has stopped at
+        self.request_queue = ReqQueue()  # Waiting requests
+        self.onboard_requests = []       # Requests already picked up
+        self.direction = None            # "up" or "down"
+        self.visited_floors = []         # Track visited floors
 
     def add_request(self, req: Request) -> None:
-        """Add a new request to the lift's queue."""
         self.request_queue.add_request(req)
     
     def next_stop(self) -> int | None:
         """
-        Decide the next stop based on the queued requests.
-        
-        Strategy:
-            - If the lift is not at the request's origin floor, head there.
-            - If already at the origin, move to the destination floor.
-        Returns:
-            The floor number of the next stop, or None if no requests are pending.
+        Determine the next floor to move to.
+        Candidates are:
+          - All destinations of onboard requests.
+          - All origins of waiting requests (if there's capacity).
+        The method then chooses the candidate in the current direction (or sets a direction if idle).
         """
-        if not self.request_queue.get_requests():
+        candidates = []
+        # Include onboard requests (their destination floors)
+        for req in self.onboard_requests:
+            candidates.append(req.destination_floor)
+        # Include waiting requests (their origin floors) if capacity allows
+        if len(self.onboard_requests) < self.capacity:
+            for req in self.request_queue.get_requests():
+                candidates.append(req.origin_floor)
+        
+        if not candidates:
             return None
 
-        # Always look at the first request in the queue.
-        req = self.request_queue.get_requests()[0]
-        
-        # If the request has not been picked up, head to its origin.
-        if not req.picked_up:
-            return req.origin_floor
-        else:
-            # If already picked up, head to its destination.
-            return req.destination_floor
+        # If idle, pick a direction based on the first candidate relative to current floor.
+        if self.direction is None:
+            for candidate in candidates:
+                if candidate > self.current_floor:
+                    self.direction = "up"
+                    break
+                elif candidate < self.current_floor:
+                    self.direction = "down"
+                    break
+
+        # Depending on direction, filter candidates.
+        if self.direction == "up":
+            up_candidates = [floor for floor in candidates if floor > self.current_floor]
+            if up_candidates:
+                return min(up_candidates)
+            else:
+                # No upward candidate; switch direction.
+                down_candidates = [floor for floor in candidates if floor < self.current_floor]
+                if down_candidates:
+                    self.direction = "down"
+                    return max(down_candidates)
+        elif self.direction == "down":
+            down_candidates = [floor for floor in candidates if floor < self.current_floor]
+            if down_candidates:
+                return max(down_candidates)
+            else:
+                up_candidates = [floor for floor in candidates if floor > self.current_floor]
+                if up_candidates:
+                    self.direction = "up"
+                    return min(up_candidates)
+        return None
 
     def move(self) -> None:
         next_stop = self.next_stop()
         if next_stop is None:
             print("No pending requests. Lift is idle.")
             return
-
+        
         # Move one floor toward next_stop.
         if self.current_floor < next_stop:
             self.current_floor += 1
@@ -67,41 +80,44 @@ class Lift:
         elif self.current_floor > next_stop:
             self.current_floor -= 1
             self.direction = "down"
-
+        
         print(f"Moving {self.direction} to floor {self.current_floor}")
 
-        # Check if we've arrived at our intended stop.
-        if self.current_floor == next_stop:
+        # Update visited floors (record every unique stop)
+        if self.current_floor not in self.visited_floors:
             self.visited_floors.append(self.current_floor)
-            print(f"Arrived at floor {self.current_floor}")
+            print(f"Visited floors updated: {self.visited_floors}")
 
-            # Get the first request (which determined our next stop).
-            req = self.request_queue.get_requests()[0]
-            
-            if not req.picked_up and self.current_floor == req.origin_floor:
+        # Drop off any onboard requests that have reached their destination.
+        served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
+        for req in served_requests:
+            print(f"Served: {req}")
+            self.onboard_requests.remove(req)
+
+        # Pick up waiting requests if the lift is at their origin and there's capacity.
+        # Iterate over a copy since we might modify the queue.
+        waiting_requests = self.request_queue.get_requests().copy()
+        for req in waiting_requests:
+            if req.origin_floor == self.current_floor and len(self.onboard_requests) < self.capacity:
+                print(f"Picked up: {req}")
                 req.picked_up = True
-                print(f"Picked up request: {req}")
-            elif req.picked_up and self.current_floor == req.destination_floor:
-                print(f"Served: {req}")
+                self.onboard_requests.append(req)
                 self.request_queue.remove_request(req)
-            
-            # Optional: Clear direction if no more requests.
-            if not self.request_queue.get_requests():
-                self.direction = None
 
+        # Reset direction if there are no pending requests.
+        if not self.request_queue.get_requests() and not self.onboard_requests:
+            self.direction = None
 
     def run(self) -> None:
-        """
-        Run the lift simulation until all requests are served.
-        This method simulates the lift moving continuously.
-        """
-        while self.request_queue.get_requests():
+        """Run the lift simulation until all requests are served."""
+        while self.request_queue.get_requests() or self.onboard_requests:
             self.move()
-            print(self)  # Show the current state of the lift.
-            time.sleep(0.5)  # Simulate time delay between moves.
+            print(self)
+            time.sleep(0.5)
 
     def __repr__(self) -> str:
         return (f"Lift(current_floor={self.current_floor}, "
                 f"direction={self.direction}, "
                 f"visited_floors={self.visited_floors}, "
-                f"queue={self.request_queue})")
+                f"waiting_queue={self.request_queue}, "
+                f"onboard_requests={self.onboard_requests})")
