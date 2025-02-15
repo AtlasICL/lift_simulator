@@ -15,7 +15,7 @@ from input_parser import parse_config
 # TODO: make self.canvas height based on number of floors
 
 # CONSTANTS:
-STEP_DELAY_MS: int = 500 # delay between lift steps in ms
+STEP_DELAY_MS: int = 800 # delay between lift steps in ms
 # this could be implemented using delta time class
 # but i am not smart enough -emre
 CONFIG_FILEPATH: str = "sources/config.json" # filepath for config.json
