@@ -1,0 +1,5 @@
+placeholder file
+
+we will use this folder for images used in documentation
+
+this includes screenshots of the GUI, and diagrams of the code organisation
