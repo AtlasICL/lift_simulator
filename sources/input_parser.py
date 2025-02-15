@@ -1,5 +1,8 @@
 import json
 
+# TODO: add default values for the variables if they are not provided in config.json? 
+# how much do we want to trust the user?
+
 def parse_config(file_path: str) -> dict:
     """
     This function reads the configuration from the config.json file
