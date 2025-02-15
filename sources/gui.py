@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+
 from lift import Lift
 from request_simulator import simulate_requests
 from input_parser import parse_config
@@ -20,6 +20,8 @@ STEP_DELAY_MS: int = 500 # delay between lift steps in ms
 # but i am not smart enough -emre
 CONFIG_FILEPATH: str = "sources/config.json" # filepath for config.json
 # TODO: is it normal that it has to be sources/config.json?
+GUI_BACKGROUND_COLOUR: str = "white"
+GUI_LIFT_COLOUR: str = "blue"
 
 class LiftSimulatorGUI:
     def __init__(self, master, config_file):
@@ -43,7 +45,7 @@ class LiftSimulatorGUI:
         # Create a canvas for drawing the building and lift
         canvas_height = self.total_floors * self.floor_height # this line dynamically adapts
         # the height of the window based on the number of floors the user has specified.
-        self.canvas = tk.Canvas(master, width=350, height=canvas_height, bg="white")
+        self.canvas = tk.Canvas(master, width=350, height=canvas_height, bg=GUI_BACKGROUND_COLOUR)
 
         self.canvas.pack(side="left", fill="both", expand=True)
         
@@ -92,7 +94,7 @@ class LiftSimulatorGUI:
         x1 = x2 - lift_width
 
         if self.lift_rect is None:
-            self.lift_rect = self.canvas.create_rectangle(x1, y - 15, x2, y + 15, fill="blue", tags="lift")
+            self.lift_rect = self.canvas.create_rectangle(x1, y - 15, x2, y + 15, fill=GUI_LIFT_COLOUR, tags="lift")
         else:
             self.canvas.coords(self.lift_rect, x1, y - 15, x2, y + 15)
 
@@ -159,5 +161,5 @@ class LiftSimulatorGUI:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = LiftSimulatorGUI(root, "sources/config.json")
+    app = LiftSimulatorGUI(root, CONFIG_FILEPATH)
     root.mainloop()
