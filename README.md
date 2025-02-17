@@ -1,5 +1,5 @@
 # ECM1414 - Data Structures and Algorithms
-### *As taught by Ronaldo Menezes at the University of Exeter, 2024 - 2025*
+### *As taught by Professor Ronaldo Menezes at the University of Exeter*
 ---
 ## Group repository for coursework submission
 
@@ -12,4 +12,3 @@
 
 ---
 
-Planning doc [here](https://docs.google.com/document/d/1w2EVh6PWvX_E1wdaU_rfJLCLgPSFd_8Gg-qB1Bz4LDg/edit?usp=sharing)
