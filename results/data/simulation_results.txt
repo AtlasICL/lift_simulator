@@ -1,0 +1,63 @@
+Lift Simulation Performance Results
+========================================
+
+Simulation 1:
+  Runtime       : 0.0333 seconds
+  Moves         : 49
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 1, 10]
+  Total Requests: 30
+
+Simulation 2:
+  Runtime       : 0.0495 seconds
+  Moves         : 62
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 10, 1]
+  Total Requests: 30
+
+Simulation 3:
+  Runtime       : 0.0336 seconds
+  Moves         : 48
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 1]
+  Total Requests: 30
+
+Simulation 4:
+  Runtime       : 0.0337 seconds
+  Moves         : 60
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 1, 10]
+  Total Requests: 30
+
+Simulation 5:
+  Runtime       : 0.1054 seconds
+  Moves         : 42
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 10, 1]
+  Total Requests: 30
+
+Simulation 6:
+  Runtime       : 0.0255 seconds
+  Moves         : 49
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 1, 10]
+  Total Requests: 30
+
+Simulation 7:
+  Runtime       : 0.0203 seconds
+  Moves         : 51
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 10, 1]
+  Total Requests: 30
+
+Simulation 8:
+  Runtime       : 0.0197 seconds
+  Moves         : 58
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 10, 1]
+  Total Requests: 30
+
+Simulation 9:
+  Runtime       : 0.0178 seconds
+  Moves         : 47
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 1, 10]
+  Total Requests: 30
+
+Simulation 10:
+  Runtime       : 0.0203 seconds
+  Moves         : 46
+  Visited Floors: [2, 3, 4, 5, 6, 7, 8, 9, 10, 1]
+  Total Requests: 30
+
