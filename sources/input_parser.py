@@ -1,7 +1,8 @@
 import json
 
 # TODO: add default values for the variables if they are not provided in config.json? 
-# how much do we want to trust the user?
+
+# TODO: MAKE SURE PROVIDED VALUES ARE >0 AND >1 
 
 def parse_config(file_path: str) -> dict:
     """
