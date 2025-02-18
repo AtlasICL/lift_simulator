@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use("Agg")
 import seaborn as sns
 
 # Set a nice style for the plots
@@ -54,7 +56,7 @@ def plot_data(file_path, x_col, y_col, x_label, title, output_file):
 def main():
     # Graph for the CSV file where the number of requests is varied
     plot_data(
-        file_path="num_requests.csv",
+        file_path="results/data/num_requests.csv",
         x_col="Num Requests",
         y_col="Moves",
         x_label="Number of Requests",
@@ -64,7 +66,7 @@ def main():
     
     # Graph for the CSV file where the total floors is varied
     plot_data(
-        file_path="floors.csv",
+        file_path="results/data/floors.csv",
         x_col="Total Floors",
         y_col="Moves",
         x_label="Total Floors",
@@ -74,7 +76,7 @@ def main():
     
     # Graph for the CSV file where the capacity is varied
     plot_data(
-        file_path="capacity.csv",
+        file_path="results/data/capacity.csv",
         x_col="Capacity",
         y_col="Moves",
         x_label="Capacity",
