@@ -1,0 +1,303 @@
+Lift Simulation Performance Results
+========================================
+
+Simulation 1:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 39
+  TTSW          : 988
+
+Simulation 2:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 22
+  TTSW          : 262
+
+Simulation 3:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 13
+  TTSW          : 98
+
+Simulation 4:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 19
+  TTSW          : 183
+
+Simulation 5:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 18
+  TTSW          : 183
+
+Simulation 6:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 21
+  TTSW          : 271
+
+Simulation 7:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 14
+  TTSW          : 94
+
+Simulation 8:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 17
+  TTSW          : 206
+
+Simulation 9:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 23
+  TTSW          : 362
+
+Simulation 10:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 32
+  TTSW          : 611
+
+Simulation 11:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 27
+  TTSW          : 374
+
+Simulation 12:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 36
+  TTSW          : 673
+
+Simulation 13:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 38
+  TTSW          : 795
+
+Simulation 14:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 42
+  TTSW          : 976
+
+Simulation 15:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 21
+  TTSW          : 186
+
+Simulation 16:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 44
+  TTSW          : 958
+
+Simulation 17:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 48
+  TTSW          : 1268
+
+Simulation 18:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 24
+  TTSW          : 365
+
+Simulation 19:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 20
+  TTSW          : 318
+
+Simulation 20:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 47
+  TTSW          : 1286
+
+Simulation 21:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 10
+  TTSW          : 61
+
+Simulation 22:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 50
+  TTSW          : 1585
+
+Simulation 23:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 39
+  TTSW          : 839
+
+Simulation 24:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 11
+  TTSW          : 73
+
+Simulation 25:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 12
+  TTSW          : 72
+
+Simulation 26:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 12
+  TTSW          : 71
+
+Simulation 27:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 23
+  TTSW          : 387
+
+Simulation 28:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 49
+  TTSW          : 1516
+
+Simulation 29:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 33
+  TTSW          : 491
+
+Simulation 30:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 39
+  TTSW          : 1087
+
+Simulation 31:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 47
+  TTSW          : 1287
+
+Simulation 32:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 28
+  TTSW          : 408
+
+Simulation 33:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 40
+  TTSW          : 743
+
+Simulation 34:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 26
+  TTSW          : 399
+
+Simulation 35:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 14
+  TTSW          : 120
+
+Simulation 36:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 47
+  TTSW          : 1230
+
+Simulation 37:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 32
+  TTSW          : 577
+
+Simulation 38:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 20
+  TTSW          : 249
+
+Simulation 39:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 50
+  TTSW          : 1670
+
+Simulation 40:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 23
+  TTSW          : 244
+
+Simulation 41:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 13
+  TTSW          : 133
+
+Simulation 42:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 44
+  TTSW          : 821
+
+Simulation 43:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 32
+  TTSW          : 559
+
+Simulation 44:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 23
+  TTSW          : 254
+
+Simulation 45:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 42
+  TTSW          : 1092
+
+Simulation 46:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 30
+  TTSW          : 500
+
+Simulation 47:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 44
+  TTSW          : 1286
+
+Simulation 48:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 37
+  TTSW          : 860
+
+Simulation 49:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 13
+  TTSW          : 167
+
+Simulation 50:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 41
+  TTSW          : 1155
+

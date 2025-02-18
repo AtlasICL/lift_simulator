@@ -22,10 +22,10 @@ def run_single_simulation(config_file: str) -> dict:
         - TTSW: Accumulation of total time spent waiting across all floors.
     """
     config = parse_config(config_file)
-    total_floors = config["total_floors"]
-    # Randomly vary the capacity between 2 and 15.
-    capacity = random.randint(2, 15)
-    num_requests = config["num_requests"]
+    total_floors = random.randint(3, 20)
+    num_requests = config["num_requests"] 
+    # Fix capacity at 5.
+    capacity = 5
 
     # Create a lift instance and generate requests.
     lift = Lift(total_floors, capacity)
@@ -80,7 +80,8 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
 if __name__ == "__main__":
     CONFIG_FILE: str = "sources/config.json"
     RUNS: int = 50  # Number of simulation runs
-    OUTPUT_FILE: str = "results/data/TTSW_vs_capacity_simulation.txt"
+    OUTPUT_FILE: str = "results/data/TTSW_vs_floors_simulation.txt"
     run_multiple_simulations(CONFIG_FILE, RUNS, OUTPUT_FILE)
 
+    
     
