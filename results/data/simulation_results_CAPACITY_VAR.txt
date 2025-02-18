@@ -1,0 +1,183 @@
+Lift Simulation Performance Results
+========================================
+
+Simulation 1:
+  Capacity      : 9
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0250 seconds
+
+Simulation 2:
+  Capacity      : 15
+  Total Requests: 30
+  Moves         : 27
+  Runtime       : 0.0145 seconds
+
+Simulation 3:
+  Capacity      : 5
+  Total Requests: 30
+  Moves         : 61
+  Runtime       : 0.0202 seconds
+
+Simulation 4:
+  Capacity      : 13
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0151 seconds
+
+Simulation 5:
+  Capacity      : 4
+  Total Requests: 30
+  Moves         : 57
+  Runtime       : 0.0178 seconds
+
+Simulation 6:
+  Capacity      : 4
+  Total Requests: 30
+  Moves         : 59
+  Runtime       : 0.0187 seconds
+
+Simulation 7:
+  Capacity      : 8
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0156 seconds
+
+Simulation 8:
+  Capacity      : 7
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0155 seconds
+
+Simulation 9:
+  Capacity      : 15
+  Total Requests: 30
+  Moves         : 32
+  Runtime       : 0.0151 seconds
+
+Simulation 10:
+  Capacity      : 12
+  Total Requests: 30
+  Moves         : 34
+  Runtime       : 0.0168 seconds
+
+Simulation 11:
+  Capacity      : 5
+  Total Requests: 30
+  Moves         : 49
+  Runtime       : 0.0189 seconds
+
+Simulation 12:
+  Capacity      : 9
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0159 seconds
+
+Simulation 13:
+  Capacity      : 6
+  Total Requests: 30
+  Moves         : 67
+  Runtime       : 0.0195 seconds
+
+Simulation 14:
+  Capacity      : 9
+  Total Requests: 30
+  Moves         : 33
+  Runtime       : 0.0155 seconds
+
+Simulation 15:
+  Capacity      : 10
+  Total Requests: 30
+  Moves         : 33
+  Runtime       : 0.0174 seconds
+
+Simulation 16:
+  Capacity      : 14
+  Total Requests: 30
+  Moves         : 27
+  Runtime       : 0.0258 seconds
+
+Simulation 17:
+  Capacity      : 3
+  Total Requests: 30
+  Moves         : 71
+  Runtime       : 0.0400 seconds
+
+Simulation 18:
+  Capacity      : 8
+  Total Requests: 30
+  Moves         : 45
+  Runtime       : 0.0260 seconds
+
+Simulation 19:
+  Capacity      : 12
+  Total Requests: 30
+  Moves         : 26
+  Runtime       : 0.0190 seconds
+
+Simulation 20:
+  Capacity      : 6
+  Total Requests: 30
+  Moves         : 51
+  Runtime       : 0.0184 seconds
+
+Simulation 21:
+  Capacity      : 3
+  Total Requests: 30
+  Moves         : 88
+  Runtime       : 0.0223 seconds
+
+Simulation 22:
+  Capacity      : 6
+  Total Requests: 30
+  Moves         : 52
+  Runtime       : 0.0175 seconds
+
+Simulation 23:
+  Capacity      : 15
+  Total Requests: 30
+  Moves         : 24
+  Runtime       : 0.0133 seconds
+
+Simulation 24:
+  Capacity      : 9
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0171 seconds
+
+Simulation 25:
+  Capacity      : 10
+  Total Requests: 30
+  Moves         : 34
+  Runtime       : 0.0153 seconds
+
+Simulation 26:
+  Capacity      : 3
+  Total Requests: 30
+  Moves         : 76
+  Runtime       : 0.0213 seconds
+
+Simulation 27:
+  Capacity      : 9
+  Total Requests: 30
+  Moves         : 36
+  Runtime       : 0.0160 seconds
+
+Simulation 28:
+  Capacity      : 9
+  Total Requests: 30
+  Moves         : 34
+  Runtime       : 0.0146 seconds
+
+Simulation 29:
+  Capacity      : 11
+  Total Requests: 30
+  Moves         : 31
+  Runtime       : 0.0136 seconds
+
+Simulation 30:
+  Capacity      : 13
+  Total Requests: 30
+  Moves         : 32
+  Runtime       : 0.0164 seconds
+
