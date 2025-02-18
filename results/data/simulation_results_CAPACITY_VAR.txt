@@ -2,182 +2,182 @@ Lift Simulation Performance Results
 ========================================
 
 Simulation 1:
-  Capacity      : 9
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0250 seconds
-
-Simulation 2:
-  Capacity      : 15
-  Total Requests: 30
-  Moves         : 27
-  Runtime       : 0.0145 seconds
-
-Simulation 3:
-  Capacity      : 5
-  Total Requests: 30
-  Moves         : 61
-  Runtime       : 0.0202 seconds
-
-Simulation 4:
-  Capacity      : 13
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0151 seconds
-
-Simulation 5:
-  Capacity      : 4
-  Total Requests: 30
-  Moves         : 57
-  Runtime       : 0.0178 seconds
-
-Simulation 6:
-  Capacity      : 4
-  Total Requests: 30
-  Moves         : 59
-  Runtime       : 0.0187 seconds
-
-Simulation 7:
-  Capacity      : 8
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0156 seconds
-
-Simulation 8:
-  Capacity      : 7
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0155 seconds
-
-Simulation 9:
-  Capacity      : 15
-  Total Requests: 30
-  Moves         : 32
-  Runtime       : 0.0151 seconds
-
-Simulation 10:
-  Capacity      : 12
-  Total Requests: 30
-  Moves         : 34
-  Runtime       : 0.0168 seconds
-
-Simulation 11:
-  Capacity      : 5
-  Total Requests: 30
-  Moves         : 49
-  Runtime       : 0.0189 seconds
-
-Simulation 12:
-  Capacity      : 9
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0159 seconds
-
-Simulation 13:
-  Capacity      : 6
-  Total Requests: 30
-  Moves         : 67
-  Runtime       : 0.0195 seconds
-
-Simulation 14:
-  Capacity      : 9
-  Total Requests: 30
-  Moves         : 33
-  Runtime       : 0.0155 seconds
-
-Simulation 15:
-  Capacity      : 10
-  Total Requests: 30
-  Moves         : 33
-  Runtime       : 0.0174 seconds
-
-Simulation 16:
+  Total Floors  : 10
   Capacity      : 14
   Total Requests: 30
-  Moves         : 27
-  Runtime       : 0.0258 seconds
+  Moves         : 35
 
-Simulation 17:
-  Capacity      : 3
+Simulation 2:
+  Total Floors  : 10
+  Capacity      : 10
   Total Requests: 30
-  Moves         : 71
-  Runtime       : 0.0400 seconds
+  Moves         : 34
 
-Simulation 18:
-  Capacity      : 8
-  Total Requests: 30
-  Moves         : 45
-  Runtime       : 0.0260 seconds
-
-Simulation 19:
+Simulation 3:
+  Total Floors  : 10
   Capacity      : 12
   Total Requests: 30
-  Moves         : 26
-  Runtime       : 0.0190 seconds
+  Moves         : 33
 
-Simulation 20:
-  Capacity      : 6
+Simulation 4:
+  Total Floors  : 10
+  Capacity      : 2
   Total Requests: 30
-  Moves         : 51
-  Runtime       : 0.0184 seconds
+  Moves         : 87
 
-Simulation 21:
+Simulation 5:
+  Total Floors  : 10
+  Capacity      : 8
+  Total Requests: 30
+  Moves         : 42
+
+Simulation 6:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 30
+  Moves         : 55
+
+Simulation 7:
+  Total Floors  : 10
+  Capacity      : 8
+  Total Requests: 30
+  Moves         : 39
+
+Simulation 8:
+  Total Floors  : 10
+  Capacity      : 7
+  Total Requests: 30
+  Moves         : 33
+
+Simulation 9:
+  Total Floors  : 10
+  Capacity      : 13
+  Total Requests: 30
+  Moves         : 27
+
+Simulation 10:
+  Total Floors  : 10
   Capacity      : 3
   Total Requests: 30
   Moves         : 88
-  Runtime       : 0.0223 seconds
 
-Simulation 22:
-  Capacity      : 6
-  Total Requests: 30
-  Moves         : 52
-  Runtime       : 0.0175 seconds
-
-Simulation 23:
-  Capacity      : 15
-  Total Requests: 30
-  Moves         : 24
-  Runtime       : 0.0133 seconds
-
-Simulation 24:
-  Capacity      : 9
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0171 seconds
-
-Simulation 25:
-  Capacity      : 10
-  Total Requests: 30
-  Moves         : 34
-  Runtime       : 0.0153 seconds
-
-Simulation 26:
-  Capacity      : 3
-  Total Requests: 30
-  Moves         : 76
-  Runtime       : 0.0213 seconds
-
-Simulation 27:
-  Capacity      : 9
-  Total Requests: 30
-  Moves         : 36
-  Runtime       : 0.0160 seconds
-
-Simulation 28:
-  Capacity      : 9
-  Total Requests: 30
-  Moves         : 34
-  Runtime       : 0.0146 seconds
-
-Simulation 29:
-  Capacity      : 11
-  Total Requests: 30
-  Moves         : 31
-  Runtime       : 0.0136 seconds
-
-Simulation 30:
+Simulation 11:
+  Total Floors  : 10
   Capacity      : 13
   Total Requests: 30
+  Moves         : 27
+
+Simulation 12:
+  Total Floors  : 10
+  Capacity      : 15
+  Total Requests: 30
+  Moves         : 29
+
+Simulation 13:
+  Total Floors  : 10
+  Capacity      : 4
+  Total Requests: 30
+  Moves         : 76
+
+Simulation 14:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 30
+  Moves         : 48
+
+Simulation 15:
+  Total Floors  : 10
+  Capacity      : 10
+  Total Requests: 30
+  Moves         : 36
+
+Simulation 16:
+  Total Floors  : 10
+  Capacity      : 10
+  Total Requests: 30
+  Moves         : 35
+
+Simulation 17:
+  Total Floors  : 10
+  Capacity      : 10
+  Total Requests: 30
+  Moves         : 35
+
+Simulation 18:
+  Total Floors  : 10
+  Capacity      : 2
+  Total Requests: 30
+  Moves         : 92
+
+Simulation 19:
+  Total Floors  : 10
+  Capacity      : 4
+  Total Requests: 30
+  Moves         : 71
+
+Simulation 20:
+  Total Floors  : 10
+  Capacity      : 10
+  Total Requests: 30
   Moves         : 32
-  Runtime       : 0.0164 seconds
+
+Simulation 21:
+  Total Floors  : 10
+  Capacity      : 12
+  Total Requests: 30
+  Moves         : 32
+
+Simulation 22:
+  Total Floors  : 10
+  Capacity      : 13
+  Total Requests: 30
+  Moves         : 27
+
+Simulation 23:
+  Total Floors  : 10
+  Capacity      : 10
+  Total Requests: 30
+  Moves         : 36
+
+Simulation 24:
+  Total Floors  : 10
+  Capacity      : 6
+  Total Requests: 30
+  Moves         : 65
+
+Simulation 25:
+  Total Floors  : 10
+  Capacity      : 2
+  Total Requests: 30
+  Moves         : 105
+
+Simulation 26:
+  Total Floors  : 10
+  Capacity      : 6
+  Total Requests: 30
+  Moves         : 44
+
+Simulation 27:
+  Total Floors  : 10
+  Capacity      : 14
+  Total Requests: 30
+  Moves         : 21
+
+Simulation 28:
+  Total Floors  : 10
+  Capacity      : 3
+  Total Requests: 30
+  Moves         : 78
+
+Simulation 29:
+  Total Floors  : 10
+  Capacity      : 5
+  Total Requests: 30
+  Moves         : 67
+
+Simulation 30:
+  Total Floors  : 10
+  Capacity      : 7
+  Total Requests: 30
+  Moves         : 44
 
