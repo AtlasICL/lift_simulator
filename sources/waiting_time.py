@@ -46,7 +46,6 @@ def run_single_simulation(config_file: str) -> dict:
     return {
         "runtime": runtime,
         "total_floors": total_floors,
-        "moves": move_count,
         "visited_floors": lift.visited_floors,
         "total_requests": num_requests,
         "capacity": capacity,
@@ -72,7 +71,6 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
             f.write(f"  Total Floors  : {result['total_floors']}\n")
             f.write(f"  Capacity      : {result['capacity']}\n")
             f.write(f"  Total Requests: {result['total_requests']}\n")
-            f.write(f"  Moves         : {result['moves']}\n")
             f.write(f"  TTSW          : {result['ttsw']}\n")
             # f.write(f"  Runtime       : {result['runtime']:.4f} seconds\n")
             f.write("\n")
@@ -81,8 +79,8 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
 
 if __name__ == "__main__":
     CONFIG_FILE: str = "sources/config.json"
-    RUNS: int = 30  # Number of simulation runs
-    OUTPUT_FILE: str = "results/data/simulation_results_CAPACITY_VAR.txt"
+    RUNS: int = 50  # Number of simulation runs
+    OUTPUT_FILE: str = "results/data/TTSW_vs_capacity.txt"
     run_multiple_simulations(CONFIG_FILE, RUNS, OUTPUT_FILE)
 
     
