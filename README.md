@@ -12,3 +12,12 @@
 
 ---
 
+# Submission organisation
+
+All of the Python source code for the project is located in the `sources/` directory.  
+
+The results from the simulation are:
+- the `.csv` / `.txt` results are in `results/data/` directory
+- the graphs for that data are in `results/charts/` directory
+
+
