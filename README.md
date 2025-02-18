@@ -19,5 +19,7 @@ All of the Python source code for the project is located in the `sources/` direc
 The results from the simulation are:
 - the `.csv` / `.txt` results are in `results/data/` directory
 - the graphs for that data are in `results/charts/` directory
+  
+The documentation and analysis of the results is located at `specification/additional_docs/documentation.md`
 
 
