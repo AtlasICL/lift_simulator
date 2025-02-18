@@ -80,7 +80,7 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
 if __name__ == "__main__":
     CONFIG_FILE: str = "sources/config.json"
     RUNS: int = 50  # Number of simulation runs
-    OUTPUT_FILE: str = "results/data/TTSW_vs_capacity.txt"
+    OUTPUT_FILE: str = "results/data/TTSW_vs_capacity_simulation.txt"
     run_multiple_simulations(CONFIG_FILE, RUNS, OUTPUT_FILE)
 
     
