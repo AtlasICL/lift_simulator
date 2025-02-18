@@ -31,6 +31,8 @@ example: we did not implement multiple lifts per building, but we do have GUI, e
 
 # 2) Usage instructions
 
+NOTE: I can do this part, it's quite easy and I'm familiar with the code anyway -Emre
+
 ## a) Requirements
 
 ## b) Configuration instructions
