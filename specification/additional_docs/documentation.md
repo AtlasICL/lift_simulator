@@ -130,7 +130,12 @@ Optionally, there are 2 additional entry points to the program, used for simulat
 
 ### a) Overview  
 We performed thorough analysis of our lift manager's performance. We made use of test scripts, which repeatedly simulated the lift operation, while randomly varying parameters such as floor count, lift capacity, and number of requests.  
-We systematically saved the results of our simulations in csv files, which are located in the `results/data/` directory.
+We systematically saved the results of our simulations in csv files, which are located in the `results/data/` directory.  
+Accross different simulation runs, the parameters that we varied were the ones present in the config.json file, in other words:
+- Number of floors in the building
+- Maximum capacity of the lift 
+- Number of requests
+In the following subsections, when we refer to "varying parameters", we are referring to the 3 above.
 
 ### b) Parameters
 
@@ -169,12 +174,13 @@ $$
 Average LOROT over a run:
 $$
 \text{LOROT}_{\text{average}} = \frac{1}{T} \: \cdot \: \int_{t = \text{beginning of simulation}}^{\text{end of simulation}}{\text{LOR}(t)}\:dt
-$$
+$$  
 
 
 ### c) Testing methodology
 
-
+In order to generate our result data, we used various testing scripts. The methodology behind these scripts was that we would examine the effects of varying different parameters on Moves / TTSW / LOROT.  
+We achieved this by setting 2 of the 3 parameters to constants, then randomly varying the 3rd over many repeated simulations. We saved the results to csv files, and generated graphs based on those.  
 
 ### d) Output format and generating graphs
 
