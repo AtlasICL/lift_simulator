@@ -44,7 +44,7 @@ Through the use of data structures like queues and priority queues, and implemen
 ## b) Scope
 
 TODO: Describe scope of project
-example: we did not implement multiple lifts per building, but we do have GUI, etc
+example: we did not implement multiple lifts per building, but we DO have GUI, etc
 
 
 
@@ -68,6 +68,14 @@ The GUI (graphical user interface) requires the Python module tkinter. This libr
 ```
 pip install tk
 ```
+For generation of graphs, we used the following libraries:
+- pandas
+- matplotlib
+- numpy
+- seaborn
+
+However you do not need to install these to run the code. They are only necessary for generation of result graphs.
+
 
 ## b) Configuration instructions
 
@@ -91,15 +99,19 @@ The file must be a valid json file.
 
 ## c) Build
 
-The program has **3 entry points**:
-- 'main.py': this entry point is to run the simulation in the command line.
-- 'gui.py': this entry point is to run the simulation with the graphical user interface.
-- 'testing.py': this entry point is to run multiple repeated simulations, in order to generate simulation data.
+The program has **2 main entry points**:
+- `sources/main.py`: this entry point is to run the simulation in the command line.
+- `sources/gui.py`: this entry point is to run the simulation with the graphical user interface.  
 
 We recommend that the user runs
 ```
 python sources/gui.py
 ```
+  
+Optionally, there are 2 additional entry points to the program, used for simulation data generation: 
+- `sources/testing/testing_script.py`: this entry point is to run multiple repeated simulations to generate simulation data. It outputs the 'moves' variable.
+- `sources/testing/ttsw_testing_script.py`: this entry point is to run multiple repeated simulations to generate simulation data. It outputs the 'TTSW' variable.
+
 
 
 
@@ -130,17 +142,44 @@ This variable accumulates the sum of waiting requests at each simulation step.
 At every iteration of the simulation loop, the number of waiting requests is added to `ttsw`. Since each simulation step represents one unit of time, TTSW is a good metric for waiting time experienced by all passengers in the simulation.
 A higher `ttsw` value indicates that, on average, passengers waited longer before being served.  
 The higher the TTSW, the more waiting has happened. 
-- **PTLIF**: PTLIF stands for Proportion of Time Lift is Full.  
-This variable represents the proportion of time the lift is at maximum capacity. Ideally, this variable should be as close as possible to 0%.  
+- **LOROT**: LOROT stands for Lift Occupancy Ratio Over Time.  
+This variable represents the occupancy ratio of the lift (how full it is) over time. On one hand, this ratio being low means the lift has more available capacity at any given moment, which would imply we would want to minimise it, vis-a-vis lift availability. On the other hand, maximising this variable means the lift is carrying as close as possible to its maximum capacity, which implies the lift is operating more efficiently.
+
+**Equations**  
+
+Formula for TTSW:  
+$$
+\text{TTSW(t)} = \sum_{t = \text{beginning of simulation}}^{\text{end of simulation}}{\text{NumberOfPeopleWaiting}(t)}
+$$
+  
+Formula for LOROT:  
+$$
+\text{LOR}(t) = \frac{\text{occupancy}(t)}{\text{max\_capacity}}
+$$
+
+$$
+\cdot
+$$
+
+
+$$
+\text{LOROT} = \int_{t = \text{beginning of simulation}}^{\text{end of simulation}}{\text{LOR}(t)}\:dt
+$$
+  
+Average LOROT over a run:
+$$
+\text{LOROT}_{\text{average}} = \frac{1}{T} \: \cdot \: \int_{t = \text{beginning of simulation}}^{\text{end of simulation}}{\text{LOR}(t)}\:dt
+$$
+
 
 ### c) Testing methodology
+
 
 
 ### d) Output format and generating graphs
 
 
 ### e) Interpretation of results
-
 
 
 
