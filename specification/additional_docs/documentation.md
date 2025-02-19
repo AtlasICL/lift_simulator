@@ -1,21 +1,33 @@
 # Documentation for the Lift manager
 
----
 
 # Table of contents
 
 - ## [1) Project overview and features](#1-project-overview-and-features-1)
-    - ### [a) Project description](#a-project-description-1)
-    - ### [b) Scope](#b-scope-1)
+    - [a) Project description](#a-project-description-1)
+    - [b) Scope](#b-scope-1)
 
 - ## [2) Usage instructions](#2-usage-instructions-1)
-    - ### [a) Requirements](#a-requirements-1)
-    - ### [b) Configuration instructions](#b-configuration-instructions-1)
-    - ### [c) Build](#c-build-1)
+    - [a) Requirements](#a-requirements-1)
+    - [b) Configuration instructions](#b-configuration-instructions-1)
+    - [c) Build](#c-build-1)
 
-- ## [3) Code documentation](#3-code-documentation-1)
+- ## [3) Performance analysis](#3-performance-analysis-1)
+    - [a) Overview](#a-overview)
+    - [b) Parameters](#b-parameters)
+    - [c) Testing methodology](#c-testing-methodology)
+    - [d) Output format and generating graphs](#d-output-format-and-generating-graphs)
+    - [e) Interpretation of results](#e-interpretation-of-results)
 
-- ## [4) Screenshots and demo](#4-screenshots-and-demo-1)
+- ## [4) Code documentation](#4-code-documentation-1)
+
+- ## [5) Screenshots and demo](#5-screenshots-and-demo-1)
+
+
+
+
+
+
 
 
 
@@ -33,6 +45,19 @@ Through the use of data structures like queues and priority queues, and implemen
 
 TODO: Describe scope of project
 example: we did not implement multiple lifts per building, but we do have GUI, etc
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 2) Usage instructions
 
@@ -76,9 +101,59 @@ We recommend that the user runs
 python sources/gui.py
 ```
 
----
 
-# 3) Code documentation
+
+
+
+
+
+
+
+
+
+
+
+
+# 3) Performance analysis
+
+### a) Overview  
+We performed thorough analysis of our lift manager's performance. We made use of test scripts, which repeatedly simulated the lift operation, while randomly varying parameters such as floor count, lift capacity, and number of requests.  
+We systematically saved the results of our simulations in csv files, which are located in the `results/data/` directory.
+
+### b) Parameters
+
+We measured the performance of the lift using 3 output values:
+- **Moves**: represents the number of moves the lift has to make over time.  
+For examplemoving from floor 2 to floor 5 corresponds to 3 moves; moving from floor 1 to floor 6, then down to floor 3, corresponds to 5+3 = 8 moves.
+- **TTSW**: TTSW stands for Total Time Spent Waiting.  
+This variable accumulates the sum of waiting requests at each simulation step.  
+At every iteration of the simulation loop, the number of waiting requests is added to `ttsw`. Since each simulation step represents one unit of time, TTSW is a good metric for waiting time experienced by all passengers in the simulation.
+A higher `ttsw` value indicates that, on average, passengers waited longer before being served.  
+The higher the TTSW, the more waiting has happened. 
+- **PTLIF**: PTLIF stands for Proportion of Time Lift is Full.  
+This variable represents the proportion of time the lift is at maximum capacity. Ideally, this variable should be as close as possible to 0%.  
+
+### c) Testing methodology
+
+
+### d) Output format and generating graphs
+
+
+### e) Interpretation of results
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 4) Code documentation
 
 - **Lift Class (lift.py)**:
 This class manages the lifts operations, including its movement, request queue, and the people inside. It uses attributes such as: current_floor (the current floor the lift is at); capacity (the max number of people the lift can hold); onboard_requests (a list of requests currently in the lift); and request_queue (a queue for handling requests outside of the lift). The methods for this class are as follows: add_requests (adds a new request to the lifts reqeust queue); move (moves the lift to the next requested floor based on its direction); and get_current_direction (determines wether the lift is moving up or down). 
@@ -89,9 +164,16 @@ This class represents the individual lift requests, made from a specific floor t
 - **GUI class (gui.py)**:
 This class manages the user interface for simulating the lift's behaviour using the tkinter library. It uses the following attributes: master (the root window of the GUI); config (configuration settings loaded from a JSON floor I(e.g., total floors)); lift (an instance of the lift class); requests (list of generated requests for the simulation); canvas (the canvas where the building and lift are drawn); start_button (the button to start the simulation); and status_label (a label to display the status of the simulation). The methods used within this class are: init (initialises the GUI, loads config, creates the lift object and prepares the canvas); draw_building (draws the bjuilding layout, including the floors and floor numbers); update_lift_position (updates the position of the lift on the canvas as it moves); update_waiting_indicators (draws circles representing people waiting at each floor); simulation_step (advances the simulation by one step, moving the lift and updating the display); and start_simulation (starts the simulation and disables the start button to prevent multiple starts).
 
----
 
-# 4) Screenshots and demo
+
+
+
+
+
+
+
+
+# 5) Screenshots and demo
 
 TODO: we should complete this later, when the project is almost finished.
 
