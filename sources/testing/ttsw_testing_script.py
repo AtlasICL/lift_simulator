@@ -1,13 +1,13 @@
 import time
+import csv
+import random
 from lift import Lift
 from request_simulator import simulate_requests
 from input_parser import parse_config
-import random
 
 """
 NOTE:
-This file serves as an alternate entry point.
-The user should run testing.py if they wish to generate new simulation output.
+This file is identical to testing.py, but incorporates the TTSW attribute.
 """
 
 def run_single_simulation(config_file: str) -> dict:
@@ -16,16 +16,16 @@ def run_single_simulation(config_file: str) -> dict:
     
     Returns a dictionary with:
         - runtime: Total simulation time in seconds.
-        - moves: Total number of lift moves executed.
         - visited_floors: List of floors the lift visited.
         - total_requests: Number of requests processed.
         - capacity: The lift capacity used for this run.
+        - ttsw: Accumulation of total time spent waiting across all floors.
     """
     config = parse_config(config_file)
-    total_floors = config["total_floors"]
-    # Randomly vary the capacity between 2 and 15.
-    capacity = random.randint(2, 15)
-    num_requests = config["num_requests"]
+    total_floors = random.randint(3, 20)
+    num_requests = config["num_requests"] 
+    # Fix capacity at 5.
+    capacity = 5
 
     # Create a lift instance and generate requests.
     lift = Lift(total_floors, capacity)
@@ -36,47 +36,50 @@ def run_single_simulation(config_file: str) -> dict:
     # Run the simulation.
     start_time = time.time()
     move_count = 0
+    ttsw = 0
     while lift.request_queue.get_requests() or getattr(lift, "onboard_requests", []):
         lift.move()
         move_count += 1
+        ttsw += len(lift.request_queue.get_requests())
     runtime = time.time() - start_time
 
     return {
         "runtime": runtime,
         "total_floors": total_floors,
-        "moves": move_count,
         "visited_floors": lift.visited_floors,
         "total_requests": num_requests,
         "capacity": capacity,
+        "ttsw": ttsw
     }
 
 def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> None:
     """
-    Run the simulation 'runs' times and log the performance metrics to an output file.
+    Run the simulation 'runs' times and log the performance metrics to an output CSV file.
     """
     results = []
     for i in range(runs):
         print(f"Running simulation {i+1}/{runs}...")
         result = run_single_simulation(config_file)
+        # Add simulation number to the result.
+        result['simulation'] = i + 1
         results.append(result)
 
-    # Write results to the output file.
-    with open(output_file, "w") as f:
-        f.write("Lift Simulation Performance Results\n")
-        f.write("=" * 40 + "\n\n")
-        for i, result in enumerate(results):
-            f.write(f"Simulation {i+1}:\n")
-            f.write(f"  Total Floors  : {result['total_floors']}\n")
-            f.write(f"  Capacity      : {result['capacity']}\n")
-            f.write(f"  Total Requests: {result['total_requests']}\n")
-            f.write(f"  Moves         : {result['moves']}\n")
-            # f.write(f"  Runtime       : {result['runtime']:.4f} seconds\n")
-            f.write("\n")
+    # Define CSV columns.
+    fieldnames = ['simulation', 'total_floors', 'capacity', 'total_requests', 'ttsw', 'runtime', 'visited_floors']
+
+    # Write the results to a CSV file.
+    with open(output_file, "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for result in results:
+            # Convert visited_floors to string to ensure proper CSV formatting.
+            result['visited_floors'] = str(result['visited_floors'])
+            writer.writerow(result)
     
     print(f"Results written to {output_file}")
 
 if __name__ == "__main__":
     CONFIG_FILE: str = "sources/config.json"
-    RUNS: int = 30  # Number of simulation runs
-    OUTPUT_FILE: str = "results/data/simulation_results_CAPACITY_VAR.txt"
+    RUNS: int = 50  # Number of simulation runs
+    OUTPUT_FILE: str = "results/data/TTSW_vs_floors_simulation.csv"
     run_multiple_simulations(CONFIG_FILE, RUNS, OUTPUT_FILE)
