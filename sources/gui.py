@@ -8,7 +8,7 @@ from input_parser import parse_config
 # The user should run EITHER sources/main.py OR sources/gui.py based on their desired usecase 
 
 # TODO: floor numbers are ugly (low priority)
-# TODO: general UI is ugly (low priority)
+# TODO: general UI is ugly(?) (low priority)
 # TODO: start simulation button doesn't work. Once the simulation has ended, can't start it again. (high priority)
 # TODO: make the lift wait at each floor? (would be good, but I'm scared it's gonna mess up the whole Lift logic)
 # TODO: make the lift show the people inside (high priority)
