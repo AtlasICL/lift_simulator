@@ -195,7 +195,7 @@ $$
 # 4) Code documentation
 
 - **Lift Class (lift.py)**:
-![Image](https://github.com/user-attachments/assets/47118910-a8e9-4f09-af65-644c535aa326)
+![Image](https://github.com/user-attachments/assets/a539db3a-253f-49f8-9620-39fb39865d94)
 This class manages the lifts operations, including its movement, request queue, and the people inside. It uses attributes such as: current_floor (the current floor the lift is at); capacity (the max number of people the lift can hold); onboard_requests (a list of requests currently in the lift); and request_queue (a queue for handling requests outside of the lift). The methods for this class are as follows: add_requests (adds a new request to the lifts reqeust queue); move (moves the lift to the next requested floor based on its direction); and get_current_direction (determines wether the lift is moving up or down). 
 
 - **Request Class (request_simulator.py)**:
