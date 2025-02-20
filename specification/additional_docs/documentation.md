@@ -224,7 +224,7 @@ This class manages the user interface for simulating the lift's behaviour using 
 
 ![Image](https://github.com/user-attachments/assets/7ad7fc37-616b-4e9f-990f-53a4b5dffbc0)
 
-
+This UML diagram is a visual representation of the structure of the lift system, -- leaving the rest of the explanation for now as it's likely that i'll need to change the UML diagram in the future. :D
 
 
 
