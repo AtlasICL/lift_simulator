@@ -8,15 +8,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-LOR_DATA_FILES = ["lor_with_constants.csv", "lor_vs_capacity.csv", "lor_vs_floors.csv", "lor_vs_requests.csv"]
+LOR_DATA_FILES = ["lor_vs_constants.csv", "lor_vs_capacity.csv", "lor_vs_floors.csv", "lor_vs_requests.csv"]
 
-WHICH_DATA: int = 3
+WHICH_DATA: int = 0 # MUST BE BETWEEN 0 AND 3
 
 DATA_FOLDER_PATH = os.path.join("results", "data", "lor_data")
 DATA_FILENAME = LOR_DATA_FILES[WHICH_DATA]
 
+FILEPATH = os.path.join(DATA_FOLDER_PATH, DATA_FILENAME)
+
 OUTPUT_FILE = "results/charts/" + (LOR_DATA_FILES[WHICH_DATA]).removesuffix(".csv") + ".png"
 
+Y_LABEL = "Average LOROT"
+X_LABEL = LOR_DATA_FILES[WHICH_DATA].removeprefix("lor_vs_").removesuffix(".csv")
+if X_LABEL == "constants":
+    X_LABEL = ""
 
 # Set a clean, publication-quality style for the plots
 sns.set(style="whitegrid", palette="muted", font_scale=1.2)
@@ -33,7 +39,7 @@ def plot_avg_lor(file_path, output_file):
     
     plt.figure(figsize=(10, 6))
     
-    sns.scatterplot(x='simulation', y='avg_lor', data=df, s=100, color="blue", label="Avg LOR")
+    sns.scatterplot(x='simulation', y='avg_lor', data=df, s=100, color="blue", label=Y_LABEL)
     
  
     # UNCOMMENT IF YOU WANT TRENDLINE
@@ -45,9 +51,9 @@ def plot_avg_lor(file_path, output_file):
     # y_fit = poly_eqn(x)
     # plt.plot(x, y_fit, color="red", linestyle="--", label="Trend line")
     
-    plt.title("Average LOR vs. Simulation")
-    plt.xlabel("Simulation")
-    plt.ylabel("Average LOR")
+    plt.title("Average LOR vs " + X_LABEL)
+    plt.xlabel(X_LABEL)
+    plt.ylabel(Y_LABEL)
     plt.legend()
     plt.tight_layout()
     
@@ -55,10 +61,11 @@ def plot_avg_lor(file_path, output_file):
     plt.close()
 
 def main():
-    file_path = os.path.join(DATA_FOLDER_PATH, DATA_FILENAME)
-    
-    plot_avg_lor(file_path, OUTPUT_FILE)
-    print(f"Graph saved to {OUTPUT_FILE}")
+    for i in range(0, 4):
+        global WHICH_DATA
+        WHICH_DATA = i
+        plot_avg_lor(FILEPATH, OUTPUT_FILE)
+        print(f"Graph saved to {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
