@@ -8,8 +8,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+LOR_DATA_FILES = ["lor_with_constants.csv", "lor_vs_capacity.csv", "lor_vs_floors.csv", "lor_vs_requests.csv"]
+
 DATA_FOLDER_PATH = os.path.join("results", "data", "lor_data")
-DATA_FILENAME = "lor_with_constants.csv"
+DATA_FILENAME = LOR_DATA_FILES[0]
+
+OUTPUT_FILE = "results/charts/lor_with_constants.png"
 
 
 # Set a clean, publication-quality style for the plots
@@ -66,10 +70,9 @@ def plot_avg_lor(file_path, output_file):
 
 def main():
     file_path = os.path.join(DATA_FOLDER_PATH, DATA_FILENAME)
-    output_file = "avg_lor_graph.png"
     
-    plot_avg_lor(file_path, output_file)
-    print(f"Graph saved to {output_file}")
+    plot_avg_lor(file_path, OUTPUT_FILE)
+    print(f"Graph saved to {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
