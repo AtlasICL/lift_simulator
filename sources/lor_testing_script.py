@@ -22,10 +22,12 @@ def run_single_simulation(config_file: str) -> dict:
         - lor: Ratio of how full the lift is at each time period of a single simulation.
     """
     config = parse_config(config_file)
-    # These three parameters kept constant.
-    total_floors = config["total_floors"]
-    num_requests = config["num_requests"] 
-    capacity = 5
+    # These two parameters kept constant.
+    num_requests = config["num_requests"]
+    capacity = 20
+    # Vary number of floors.
+    total_floors = random.randint(3, 20)
+    
 
     # Create a lift instance and generate requests.
     lift = Lift(total_floors, capacity)
@@ -79,5 +81,5 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
 if __name__ == "__main__":
     CONFIG_FILE: str = "sources/config.json"
     RUNS: int = 10  # Number of simulation runs
-    OUTPUT_FILE: str = "results/data/lor_with_constants.csv"
+    OUTPUT_FILE: str = "results/data/lor_vs_floors.csv"
     run_multiple_simulations(CONFIG_FILE, RUNS, OUTPUT_FILE)
