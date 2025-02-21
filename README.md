@@ -10,6 +10,10 @@
 
 ---
 
+Find our report [here](specification/additional_docs/documentation.md)
+
+---
+
 # Submission organisation
 
 All of the Python source code for the project is located in the `sources/` directory.  
