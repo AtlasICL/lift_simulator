@@ -2,21 +2,22 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib
-matplotlib.use("Agg")  # Use a non-interactive backend
+matplotlib.use("Agg")  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Set a nice style for the plots
+# Set a clean, publication-quality style for the plots
 sns.set(style="whitegrid", palette="muted", font_scale=1.2)
 
-def plot_data(file_path, x_col, y_col, x_label, title, output_file):
+def plot_exponential_trend(file_path, x_col, y_col, x_label, title, output_file):
     """
-    Reads a CSV file and plots a scatter plot with a linear trend line.
+    Reads a CSV file and plots a scatter plot of y_col vs x_col, 
+    fitting an exponential trendline (y = a * exp(b*x)).
     
     Parameters:
         file_path (str): Path to the CSV file.
-        x_col (str): Name of the column for the x-axis (the varied parameter).
-        y_col (str): Name of the column for the y-axis (e.g., TTSW).
+        x_col (str): Column name for the x-axis (Capacity).
+        y_col (str): Column name for the y-axis (TTSW).
         x_label (str): Label for the x-axis.
         title (str): Title of the graph.
         output_file (str): File name to save the plot.
@@ -30,18 +31,20 @@ def plot_data(file_path, x_col, y_col, x_label, title, output_file):
     # Scatter plot of the data
     sns.scatterplot(x=x_col, y=y_col, data=df, s=100, color="blue", label="Data Points")
     
-    # Sort the DataFrame by the x_col to create a smooth trend line
+    # Sort the DataFrame by the x_col for a smooth trendline curve
     sorted_df = df.sort_values(by=x_col)
     x = sorted_df[x_col]
     y = sorted_df[y_col]
     
-    # Compute a linear regression (trend line) using numpy
-    coefficients = np.polyfit(x, y, 1)  # degree 1 for a linear fit
-    poly_eqn = np.poly1d(coefficients)
-    y_fit = poly_eqn(x)
+    # Fit an exponential model: y = a * exp(b * x)
+    # Taking logarithms: log(y) = log(a) + b * x, so we can use a linear fit on (x, log(y))
+    coefficients = np.polyfit(x, np.log(y), 1)  # Returns [b, log(a)]
+    b = coefficients[0]
+    a = np.exp(coefficients[1])
+    y_fit = a * np.exp(b * x)
     
-    # Plot the trend line
-    plt.plot(x, y_fit, color="red", linestyle="--", label="Trend line")
+    # Plot the exponential trendline
+    plt.plot(x, y_fit, color="red", linestyle="--", label="Exponential Trendline")
     
     # Set title and labels
     plt.title(title)
@@ -55,38 +58,19 @@ def plot_data(file_path, x_col, y_col, x_label, title, output_file):
     plt.show()
 
 def main():
-    # Define the folder containing the CSV files
-    results_folder = "results/data"
+    # Define file paths (adjust folder paths as needed)
+    file_path = os.path.join("results", "data", "ttsw_data", "ttsw_vs_capacity.csv")
+    output_file = os.path.join("results", "charts", "ttsw_vs_capacity_exponential.png")
     
-    # Graph for the CSV file where Total Requests is varied
-    plot_data(
-        file_path=os.path.join(results_folder, "ttsw_vs_requests.csv"),
-        x_col="Total Requests",
-        y_col="TTSW",
-        x_label="Total Requests",
-        title="Lift Simulation Performance (TTSW) vs. Total Requests",
-        output_file="total_requests_TTSW_graph.png"
-    )
-    
-    # Graph for the CSV file where Total Floors is varied
-    plot_data(
-        file_path=os.path.join(results_folder, "ttsw_vs_floors.csv"),
-        x_col="Total Floors",
-        y_col="TTSW",
-        x_label="Total Floors",
-        title="Lift Simulation Performance (TTSW) vs. Total Floors",
-        output_file="floors_TTSW_graph.png"
-    )
-    
-    # Graph for the CSV file where Capacity is varied
-    plot_data(
-        file_path=os.path.join(results_folder, "ttsw_vs_capacity.csv"),
+    plot_exponential_trend(
+        file_path=file_path,
         x_col="Capacity",
         y_col="TTSW",
         x_label="Capacity",
-        title="Lift Simulation Performance (TTSW) vs. Capacity",
-        output_file="capacity_TTSW_graph.png"
+        title="Lift Simulation Performance (TTSW) vs Capacity\n(Exponential Trend)",
+        output_file=output_file
     )
+    print(f"Graph saved to {output_file}")
 
 if __name__ == "__main__":
     main()
