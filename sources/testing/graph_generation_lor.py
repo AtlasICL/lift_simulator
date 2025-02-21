@@ -10,10 +10,12 @@ import seaborn as sns
 
 LOR_DATA_FILES = ["lor_with_constants.csv", "lor_vs_capacity.csv", "lor_vs_floors.csv", "lor_vs_requests.csv"]
 
-DATA_FOLDER_PATH = os.path.join("results", "data", "lor_data")
-DATA_FILENAME = LOR_DATA_FILES[0]
+WHICH_DATA: int = 3
 
-OUTPUT_FILE = "results/charts/lor_with_constants.png"
+DATA_FOLDER_PATH = os.path.join("results", "data", "lor_data")
+DATA_FILENAME = LOR_DATA_FILES[WHICH_DATA]
+
+OUTPUT_FILE = "results/charts/" + (LOR_DATA_FILES[WHICH_DATA]).removesuffix(".csv") + ".png"
 
 
 # Set a clean, publication-quality style for the plots
