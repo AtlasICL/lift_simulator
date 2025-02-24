@@ -133,13 +133,15 @@ class LiftSimulatorGUI:
 
     def simulation_step(self):
         """Performs a simulation step and schedules the next one."""
-        # Check if there are still pending requests, if so, go through normal logic
+        # the following if statement checks whether there is, either
+        # at least 1 request still remaining, or at least 1 person still on the lift
+        # if so, we go through the logic
         if self.lift.request_queue.get_requests() or self.lift.onboard_requests:
-            self.lift.move() # Advance the simulation one move
-            self.update_lift_position() # Update GUI representation
+            self.lift.move() # simulation goes forward by 1 move
+            self.update_lift_position() # update the position of the lift
             self.update_waiting_indicators() # update the little circles of people waiting on each floor
             
-            # Update status label with current info
+            # update status label (on the right) with current info
             status_text = (
                 f"Current Floor: {self.lift.current_floor}\n"
                 f"Direction: {self.lift.direction}\n"
@@ -148,15 +150,14 @@ class LiftSimulatorGUI:
             )
             self.status_label.config(text=status_text)
             
-            # Schedule next step after 500ms (adjust delay as needed)
+            # next step after STEP_DELAY_MS milliseconds (we have chose ~750), can be changed at top of file
             self.master.after(STEP_DELAY_MS, self.simulation_step)
         else:
             self.status_label.config(text="Simulation finished!")
             self.start_button.config(state="normal")
     
     def start_simulation(self):
-        self.start_button.config(state="disabled") # should not be able to press start button 
-        # once the simulation has already started
+        self.start_button.config(state="disabled") # should not be able to press start button once the simulation has been started
         self.simulation_step()
 
 if __name__ == "__main__":
