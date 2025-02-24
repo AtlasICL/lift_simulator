@@ -7,8 +7,6 @@ from input_parser import parse_config
 # NOTE: This file is a SECONDARY entry point to the program
 # The user should run EITHER sources/main.py OR sources/gui.py based on their desired usecase 
 
-# TODO: floor numbers are ugly (low priority)
-# TODO: general UI is ugly(?) (low priority)
 # TODO: start simulation button doesn't work. Once the simulation has ended, can't start it again. (high priority)
 # TODO: make the lift wait at each floor? (would be good, but I'm scared it's gonna mess up the whole Lift logic)
 # TODO: make the lift show the people inside (high priority)
@@ -71,10 +69,10 @@ class LiftSimulatorGUI:
         """Draw floor lines and labels on the canvas based on the current canvas width."""
         self.canvas.delete("floor")
         canvas_width = int(self.canvas["width"]) # gets current canvas width
-        left_margin = 10
-        right_margin = 10
-        line_start = left_margin
-        line_end = canvas_width - right_margin
+        LEFT_MARGIN = 10
+        RIGHT_MARGIN = 10
+        line_start = LEFT_MARGIN
+        line_end = canvas_width - RIGHT_MARGIN
 
         for i in range(1, self.total_floors + 1):
             # calculate y-coordinate for floor i
@@ -82,18 +80,18 @@ class LiftSimulatorGUI:
             # draw the floor line to span the full width of the canvas
             self.canvas.create_line(line_start, y, line_end, y, fill="gray", tags="floor")
             # draw the floor number near the left margin (adjust as needed)
-            self.canvas.create_text(left_margin + 20, y - self.floor_height/2, text=str(i), tags="floor")
+            self.canvas.create_text(LEFT_MARGIN + 20, y - self.floor_height/2, text=str(i), tags="floor")
 
     
     def update_lift_position(self):
         canvas_height = int(self.canvas["height"])
         canvas_width = int(self.canvas["width"])
         y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height # this gets the y coordinate for the lift rect
-        lift_width = 50  # width of the lift rectangle
+        LIFT_WIDTH = 50  # width of the lift rectangle
 
         # Position the lift 20 pixels from the right edge.
         x2 = canvas_width - 20
-        x1 = x2 - lift_width
+        x1 = x2 - LIFT_WIDTH
 
         if self.lift_rect is None:
             self.lift_rect = self.canvas.create_rectangle(x1, y - 15, x2, y + 15, fill=GUI_LIFT_COLOUR, tags="lift")
