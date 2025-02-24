@@ -15,13 +15,18 @@ from input_parser import parse_config
 # TODO: make self.canvas height based on number of floors
 
 # CONSTANTS:
+
 STEP_DELAY_MS: int = 800 # delay between lift steps in ms
 # this could be implemented using delta time class
 # but i am not smart enough -emre
+
 CONFIG_FILEPATH: str = "sources/config.json" # filepath for config.json
 # TODO: is it normal that it has to be sources/config.json?
+# answer: yes, dont worry
+
 GUI_BACKGROUND_COLOUR: str = "white"
 GUI_LIFT_COLOUR: str = "blue"
+
 
 class LiftSimulatorGUI:
     def __init__(self, master, config_file):
@@ -33,7 +38,7 @@ class LiftSimulatorGUI:
         self.capacity = self.config["capacity"]
         self.num_requests = self.config["num_requests"]
 
-        self.floor_height = 40 # I had to move this up because self.canvas = tk.Canvas(...)
+        self.floor_height = 40 # i had to move this up because self.canvas = tk.Canvas(...)
         # required the floor_height to determine the size of the window
         
         # Create the simulation objects
@@ -42,14 +47,14 @@ class LiftSimulatorGUI:
         for req in self.requests:
             self.lift.add_request(req)
         
-        # Create a canvas for drawing the building and lift
         canvas_height = self.total_floors * self.floor_height # this line dynamically adapts
         # the height of the window based on the number of floors the user has specified.
+        # i implemented this otherwise the window looked really ugly for certain input parameters
         self.canvas = tk.Canvas(master, width=350, height=canvas_height, bg=GUI_BACKGROUND_COLOUR)
 
         self.canvas.pack(side="left", fill="both", expand=True)
         
-        # Create a frame for controls and status display
+        # creates the tk frame
         self.info_frame = tk.Frame(master)
         self.info_frame.pack(side="right", fill="y", padx=10, pady=10)
         
@@ -59,34 +64,31 @@ class LiftSimulatorGUI:
         self.start_button = tk.Button(self.info_frame, text="Start Simulation", command=self.start_simulation)
         self.start_button.pack(pady=10)
         
-        # Drawing settings for floors and lift
         self.draw_building()
-        self.lift_rect = None  # Will hold the lift representation on the canvas
+        self.lift_rect = None
     
     def draw_building(self):
         """Draw floor lines and labels on the canvas based on the current canvas width."""
         self.canvas.delete("floor")
-        # Get current canvas width
-        canvas_width = int(self.canvas["width"])
+        canvas_width = int(self.canvas["width"]) # gets current canvas width
         left_margin = 10
         right_margin = 10
         line_start = left_margin
         line_end = canvas_width - right_margin
 
         for i in range(1, self.total_floors + 1):
-            # Calculate y-coordinate for floor i.
+            # calculate y-coordinate for floor i
             y = (self.total_floors - i + 1) * self.floor_height
-            # Draw the floor line to span the full width of the canvas.
+            # draw the floor line to span the full width of the canvas
             self.canvas.create_line(line_start, y, line_end, y, fill="gray", tags="floor")
-            # Draw the floor number near the left margin (adjust as needed).
+            # draw the floor number near the left margin (adjust as needed)
             self.canvas.create_text(left_margin + 20, y - self.floor_height/2, text=str(i), tags="floor")
 
     
     def update_lift_position(self):
         canvas_height = int(self.canvas["height"])
         canvas_width = int(self.canvas["width"])
-        # Calculate y-coordinate for the center of the lift rectangle.
-        y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height
+        y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height # this gets the y coordinate for the lift rect
         lift_width = 50  # width of the lift rectangle
 
         # Position the lift 20 pixels from the right edge.
