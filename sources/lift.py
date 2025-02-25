@@ -4,11 +4,11 @@ from enum import Enum
 from req_queue import ReqQueue
 from request import Request
 
-
 class Direction(Enum):
     UP = "up"
     DOWN = "down"
     NONE = None
+
 
 class Lift:
     def __init__(self, total_floors: int, capacity: int):
