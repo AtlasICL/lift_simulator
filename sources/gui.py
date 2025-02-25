@@ -16,17 +16,25 @@ from input_parser import parse_config
 
 # CONSTANTS:
 
-STEP_DELAY_MS: int = 800 # delay between lift steps in ms
+STEP_DELAY_MS: int = 800  # delay between lift steps in ms
 
 CONFIG_FILEPATH: str = os.path.join("sources", "config.json") # filepath for config.json
 
-GUI_BACKGROUND_COLOUR: str = "white"
-GUI_LIFT_COLOUR: str = "blue"
-GUI_FLOOR_HEIGHT: int = 40
-GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"
-GUI_LIFT_TEXT_COLOUR: str = "white"
-GUI_LIFT_TEXT_FONT: str = "Arial"
-GUI_LIFT_TEXT_FONT_SIZE: int = 13
+GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
+GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
+GUI_DEFAULT_FONT: str = "Arial"
+
+GUI_LIFT_COLOUR: str = "blue"                        # fill colour of the lift rectangle 
+
+GUI_FLOOR_HEIGHT: int = 40                           # height of each floor
+
+GUI_LIFT_TEXT_COLOUR: str = "white"                  # text colour for onboard counter in lift rectangle
+GUI_LIFT_TEXT_FONT: str = GUI_DEFAULT_FONT           # text font for onboard counter in lift rectangle
+GUI_LIFT_TEXT_FONT_SIZE: int = 13                    # text font size for onboard counter in lift rectangle
+
+GUI_STATUS_TEXT_TITLE: str = "Lift Status"           # title for the status text
+GUI_STATUS_TEXT_FONT: str = GUI_DEFAULT_FONT         # text font for status text (set to default, Arial)
+GUI_STATUS_TEXT_FONT_SIZE: int = 14                  # text font size for status text
 
 
 class LiftSimulatorGUI:
@@ -59,7 +67,7 @@ class LiftSimulatorGUI:
         self.info_frame = tk.Frame(master)
         self.info_frame.pack(side="right", fill="y", padx=10, pady=10)
         
-        self.status_label = tk.Label(self.info_frame, text="Lift Status", font=("Arial", 14))
+        self.status_label = tk.Label(self.info_frame, text=GUI_STATUS_TEXT_TITLE, font=(GUI_STATUS_TEXT_FONT, GUI_STATUS_TEXT_FONT_SIZE))
         self.status_label.pack(pady=10)
         
         self.start_button = tk.Button(self.info_frame, text="Start Simulation", command=self.start_simulation)
