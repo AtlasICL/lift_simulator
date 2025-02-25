@@ -58,18 +58,14 @@ class Lift:
         if not candidates:
             return None
 
-        # if idle, pick a direction
+        # if idle, pick a direction (we arbitrarily assign it to UP, if there are no upward requests the next_step() method 
+        # will take care of that anyway)
         if self.direction == Direction.NONE:
-            for candidate in candidates:
-                if candidate > self.current_floor:
-                    self.direction = Direction.UP
-                    break
-                elif candidate < self.current_floor:
-                    self.direction = Direction.DOWN
-                    break
+            self.direction = Direction.UP
 
         # filter the candidates based on the direction of the lift
         # Explanation: if the lift is moving upward, we do not want to pick up any requests which want to go downwards
+        # so we filter those requests which are upward
         if self.direction == Direction.UP:
             up_candidates = [floor for floor in candidates if floor > self.current_floor]
             if up_candidates:
