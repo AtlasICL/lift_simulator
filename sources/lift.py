@@ -130,7 +130,6 @@ class Lift:
         """Run the lift simulation until all requests are served."""
         while self.request_queue.get_requests() or self.onboard_requests:
             self.move()
-            # print(self)
             time.sleep(0.5)
 
 
