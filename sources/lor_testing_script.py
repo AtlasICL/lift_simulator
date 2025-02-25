@@ -10,7 +10,7 @@ NOTE:
 This file is identical to testing.py, but incorporates the LOR attribute.
 """
 
-def run_single_simulation(config_file: str) -> dict:
+def run_single_simulation(i: int, config_file: str) -> dict:
     """
     Run a single simulation and record performance metrics.
     
@@ -22,16 +22,15 @@ def run_single_simulation(config_file: str) -> dict:
         - lor: Ratio of how full the lift is at each time period of a single simulation.
     """
     config = parse_config(config_file)
-    # These two parameters kept constant.
-    num_requests = config["num_requests"]
+    # Of these three parameters, we have varied one at a time whilst kept the other two constant for data analysis.
+    num_requests = [10, 20, 30, 40, 50]
     capacity = 20
-    # Vary number of floors.
-    total_floors = random.randint(3, 20)
+    total_floors = config["total_floors"]
     
 
     # Create a lift instance and generate requests.
     lift = Lift(total_floors, capacity)
-    requests = simulate_requests(n_requests=num_requests, max_floor=total_floors)
+    requests = simulate_requests(n_requests=num_requests[i], max_floor=total_floors)
     for req in requests:
         lift.add_request(req)
 
@@ -47,7 +46,7 @@ def run_single_simulation(config_file: str) -> dict:
     return {
         "total_floors": total_floors,
         "visited_floors": lift.visited_floors,
-        "total_requests": num_requests,
+        "total_requests": num_requests[i],
         "capacity": capacity,
         "lor": lor
     }
@@ -59,7 +58,7 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
     results = []
     for i in range(runs):
         print(f"Running simulation {i+1}/{runs}...")
-        result = run_single_simulation(config_file)
+        result = run_single_simulation(i, config_file)
         # Add simulation number to the result.
         result['simulation'] = i + 1
         results.append(result)
@@ -80,6 +79,6 @@ def run_multiple_simulations(config_file: str, runs: int, output_file: str) -> N
 
 if __name__ == "__main__":
     CONFIG_FILE: str = "sources/config.json"
-    RUNS: int = 10  # Number of simulation runs
-    OUTPUT_FILE: str = "results/data/lor_vs_floors.csv"
+    RUNS: int = 5  # Number of simulation runs
+    OUTPUT_FILE: str = "results/data/lor_vs_time_varying_requests.csv"
     run_multiple_simulations(CONFIG_FILE, RUNS, OUTPUT_FILE)
