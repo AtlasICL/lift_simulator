@@ -1,5 +1,4 @@
 # ECM1414 - Data Structures and Algorithms
-### *As taught by Professor Ronaldo Menezes at the University of Exeter*
 
 ### Team members:
 - Luca Croci, lc1107@exeter.ac.uk
