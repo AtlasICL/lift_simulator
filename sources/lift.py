@@ -22,7 +22,6 @@ class Lift:
         request_queue (ReqQueue): Queue with the requests for the lift.
         onboard_requests (list[Request]): List of requests which are onboard the lift at given time.
         direction (Direction): Current direction of the elevator - enum: (UP, DOWN, or NONE).
-        visited_floors (list[int]): list of visited vloors.
 
     """
 
@@ -33,7 +32,6 @@ class Lift:
         self.request_queue = ReqQueue()  # Waiting requests
         self.onboard_requests = []       # Requests already picked up
         self.direction = Direction.NONE  # enum, UP, DOWN, or NONE
-        self.visited_floors = []         # Track visited floors
 
     def add_request(self, req: Request) -> None:
         self.request_queue.add_request(req)
@@ -109,11 +107,6 @@ class Lift:
         
         # print(f"Moving {self.direction} to floor {self.current_floor}")
 
-        # update visited floors 
-        if self.current_floor not in self.visited_floors:
-            self.visited_floors.append(self.current_floor)
-            # print(f"Visited floors updated: {self.visited_floors}")
-
         # drop off any onboard requests that have reached their destination.
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
@@ -144,6 +137,5 @@ class Lift:
     def __repr__(self) -> str:
         return (f"Lift(current_floor={self.current_floor}, "
                 f"direction={self.direction}, "
-                f"visited_floors={self.visited_floors}, "
                 f"waiting_queue={self.request_queue}, "
                 f"onboard_requests={self.onboard_requests})")
