@@ -2,28 +2,24 @@ from request import Request
 
 class ReqQueue:
     """
-    A queue manager for Request objects.
-
-    The ReqQueue class provides a data structure to store and manage Request objects.
-    It supports adding and removing requests, eliminating duplicate requests based on 
-    their origin and destination floors, and purging requests that have been served 
-    according to a specified order of visited floors.
+    This class stores a list of Request instances.
+    This class implements functionality for adding and removing Requests to the queue.
 
     Attributes:
         requests (list[Request]): A list containing the Request objects currently in the queue.
 
     Methods:
         __init__():
-            Initializes an empty ReqQueue.
+            The constructor initialises an empty queue.
 
         get_requests() -> list[Request]:
-            Returns the list of Request objects in the queue.
+            Returns the list of Requests in the queue.
 
         add_request(req: Request) -> None:
-            Adds a new Request object to the queue.
+            Add a new instance of Request to the queue.
 
         remove_request(req: Request) -> None:
-            Removes the specified Request object from the queue if it exists.
+            Remove a specified request from the queue (if it does indeed exist).
         
         __repr__() -> str:
             Returns a string representation of the current state of the queue.
