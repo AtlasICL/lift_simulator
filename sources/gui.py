@@ -2,6 +2,7 @@ import tkinter as tk
 import os
 
 from lift import Lift
+from lift import Direction
 from request_simulator import simulate_requests
 from input_parser import parse_config
 
@@ -97,6 +98,20 @@ class LiftSimulatorGUI:
         else:
             self.canvas.coords(self.lift_rect, x1, y - 15, x2, y + 15)
 
+        # display the number of people onboard inside the lift rectangle
+        onboard_count = len(self.lift.onboard_requests)
+        if not hasattr(self, 'lift_text') or self.lift_text is None:
+            self.lift_text = self.canvas.create_text(
+                (x1 + x2) // 2, y,
+                text=str(onboard_count),
+                fill="white",
+                font=("Arial", 13, "bold"),
+                tags="lift_text"
+            )
+        else:
+            self.canvas.itemconfig(self.lift_text, text=str(onboard_count))
+            self.canvas.coords(self.lift_text, (x1 + x2) // 2, y)
+
 
     def update_waiting_indicators(self):
         """
@@ -129,6 +144,9 @@ class LiftSimulatorGUI:
                     fill="red", tags="waiting"
                 )
 
+    def __gui_display_lift_direction(self, lift_direction) -> str:
+        direction_display: dict = {Direction.UP: "up  ", Direction.DOWN : "down", Direction.NONE : "none"}
+        return direction_display[lift_direction]
 
     def simulation_step(self):
         """Performs a simulation step and schedules the next one."""
@@ -143,7 +161,7 @@ class LiftSimulatorGUI:
             # update status label (on the right) with current info
             status_text = (
                 f"Current Floor: {self.lift.current_floor}\n"
-                f"Direction: {self.lift.direction}\n"
+                f"Direction: {self.__gui_display_lift_direction(self.lift.direction)}\n"
                 f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
                 f"Onboard: {len(self.lift.onboard_requests)}"
             )
