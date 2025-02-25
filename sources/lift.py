@@ -12,7 +12,7 @@ class Direction(Enum):
 
 class Lift:
     """
-    This lass implements the main functionality of the lift, namely deciding where to go next (using next_stop() method),
+    This lass implements the main functionality of the lift, namely deciding where to go next (using next_floor() method),
     and removing served requests from its request_queue.
 
     Attributes:
@@ -36,7 +36,7 @@ class Lift:
 
     def __filter_candidates(self, candidates: list[int], compare, select) -> int | None:
         """
-        Helper function to filter candidate requests in next_stop() method.
+        Helper function to filter candidate requests in next_floor() method.
         Retrurns the selected floor, or None if no valid candidate.
         Compare takes in an inline (lambda) function which compares the candidate to the current floor based on 
         the lift's current direction (so x>y or x<y based on if lift direction is upward or downward).
@@ -46,13 +46,13 @@ class Lift:
         return select(valid_floors) if valid_floors else None
     
     
-    def next_stop(self) -> int | None:
+    def next_floor(self) -> int | None:
         """
         Determine the next floor to move to.
 
         This function is the main algorithm of our lift. 
         
-        The lift has a direction, up or down. If the lift is upbound, the next_stop() function filters requests by ones which 
+        The lift has a direction, up or down. If the lift is upbound, the next_floor() function filters requests by ones which 
         are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
         """
         candidates = []
@@ -96,15 +96,14 @@ class Lift:
 
 
     def move(self) -> None:
-        next_stop = self.next_stop()
-        if next_stop is None:
+        next_floor = self.next_floor()
+        if next_floor is None:
             print("No pending requests. Lift is idle.")
             return
         
-        # make a move -> up / down 1 floor
-        if self.current_floor < next_stop:
+        if self.current_floor < next_floor:
             self.current_floor += 1
-        elif self.current_floor > next_stop:
+        elif self.current_floor > next_floor:
             self.current_floor -= 1
 
         # drop off any onboard requests that have reached their destination.

@@ -44,7 +44,7 @@ class LiftSimulatorGUI:
         self.lift = Lift(self.total_floors, self.capacity)
         self.requests = simulate_requests(n_requests=self.num_requests, max_floor=self.total_floors)
         for req in self.requests:
-            self.lift.add_request(req)
+            self.lift.request_queue.add_request(req)
         
         canvas_height = self.total_floors * self.floor_height # this line dynamically adapts
         # the height of the window based on the number of floors the user has specified.
