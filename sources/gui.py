@@ -6,13 +6,6 @@ from lift import Direction
 from request_simulator import simulate_requests
 from input_parser import parse_config
 
-# NOTE: This file is a SECONDARY entry point to the program
-# The user should run EITHER sources/main.py OR sources/gui.py based on their desired usecase 
-
-# TODO: start simulation button doesn't work. Once the simulation has ended, can't start it again. (high priority)
-# TODO: make the lift wait at each floor? (would be good, but I'm scared it's gonna mess up the whole Lift logic)
-# TODO: make the lift show the people inside (high priority)
-# TODO: make self.canvas height based on number of floors
 
 # CONSTANTS:
 
