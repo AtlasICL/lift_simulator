@@ -10,7 +10,9 @@
 
 ---
 
-Find our report [here](specification/additional_docs/documentation.md)
+**Find our report [here](specification/additional_docs/documentation.md)**  
+
+**Find our presentation video [here](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**
 
 ---
 
@@ -19,44 +21,10 @@ Find our report [here](specification/additional_docs/documentation.md)
 All of the Python source code for the project is located in the `sources/` directory.  
 
 The results from the simulation are:
-- the `.csv` / `.txt` results are in `results/data/` directory
-- the graphs for that data are in `results/charts/` directory
+- the `.csv` / `.txt` results are in `results/data/` directory.
+- the graphs for that data are in `results/charts/` directory.
   
-The documentation and analysis of the results is located at `specification/additional_docs/documentation.md`
+Our report / documentation is in the `report` directory.
   
-Here is the submission folder structure:
-
-ecm1414-coursework/  
-├── sources/  
-│   ├── testing/  
-│   │   ├── graph_generation.py  
-│   │   ├── testing_script.py  
-│   │   └── ...  
-│   ├── config.json  
-│   ├── main.py  
-│   ├── gui.py  
-│   ├── lift.py  
-│   ├── req_queue.py  
-│   ├── request.py  
-│   └── request_simulator.py  
-├── results/  
-│   ├── charts/  
-│   │   └── *.png  
-│   └── data/  
-│       ├── lor_data/  
-│       │   └── *.csv  
-│       ├── ttsw_data/  
-│       │   └── *.csv  
-│       └── moves_data/  
-│           └── *.csv  
-├── specification/  
-│   ├── additional_docs/  
-│   │   ├── images_for_documentation/  
-│   │   │   ├── diagrams.png  
-│   │   │   └── ...  
-│   │   └── documentation.md  
-│   └── coursework_spec.pdf  
-├── .gitignore  
-└── README.md  
 
 
