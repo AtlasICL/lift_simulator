@@ -8,7 +8,7 @@ CONFIG_FILEPATH: str = os.path.join("sources", "config.json") # filepath for con
 
 def main() -> None:
     root = tk.Tk()
-    app = LiftSimulatorGUI(root, CONFIG_FILEPATH)
+    gui = LiftSimulatorGUI(root, CONFIG_FILEPATH)
     root.mainloop()
 
 if __name__ == "__main__":
