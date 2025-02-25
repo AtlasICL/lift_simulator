@@ -1,5 +1,4 @@
 import tkinter as tk
-import os
 
 from lift import Lift
 from lift import Direction
