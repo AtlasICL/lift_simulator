@@ -1,15 +1,23 @@
+import time
+from enum import Enum
+
 from req_queue import ReqQueue
 from request import Request
-import time
+
+
+class Direction(Enum):
+    UP = "up"
+    DOWN = "down"
+    NONE = None
 
 class Lift:
     def __init__(self, total_floors: int, capacity: int):
-        self.current_floor = 1          # Start at floor 1
+        self.current_floor = 1           # Start at floor 1
         self.total_floors = total_floors
         self.capacity = capacity
         self.request_queue = ReqQueue()  # Waiting requests
         self.onboard_requests = []       # Requests already picked up
-        self.direction = None            # "up" or "down"
+        self.direction = Direction.NONE  # enum, UP, DOWN, or NONE
         self.visited_floors = []         # Track visited floors
 
     def add_request(self, req: Request) -> None:
@@ -33,23 +41,23 @@ class Lift:
         if len(self.onboard_requests) < self.capacity:
             for req in self.request_queue.get_requests():
                 candidates.append(req.origin_floor)
-        
+
         if not candidates:
             return None
 
         # if idle, pick a direction
-        if self.direction is None:
+        if self.direction == Direction.NONE:
             for candidate in candidates:
                 if candidate > self.current_floor:
-                    self.direction = "up"
+                    self.direction = Direction.UP
                     break
                 elif candidate < self.current_floor:
-                    self.direction = "down"
+                    self.direction = Direction.DOWN
                     break
 
         # filter the candidates based on the direction of the lift
         # Explanation: if the lift is moving upward, we do not want to pick up any requests which want to go downwards
-        if self.direction == "up":
+        if self.direction == Direction.UP:
             up_candidates = [floor for floor in candidates if floor > self.current_floor]
             if up_candidates:
                 return min(up_candidates)
@@ -57,16 +65,16 @@ class Lift:
                 # no one wants to go upwards (no valid up_candidates) so we switch direction
                 down_candidates = [floor for floor in candidates if floor < self.current_floor]
                 if down_candidates:
-                    self.direction = "down"
+                    self.direction = Direction.DOWN
                     return max(down_candidates)
-        elif self.direction == "down":
+        elif self.direction == Direction.DOWN:
             down_candidates = [floor for floor in candidates if floor < self.current_floor]
             if down_candidates:
                 return max(down_candidates)
             else:
                 up_candidates = [floor for floor in candidates if floor > self.current_floor]
                 if up_candidates:
-                    self.direction = "up"
+                    self.direction = Direction.UP
                     return min(up_candidates)
         return None
 
@@ -76,13 +84,13 @@ class Lift:
             print("No pending requests. Lift is idle.")
             return
         
-        # make a [move] -> up / down 1 floor
+        # make a move -> up / down 1 floor
         if self.current_floor < next_stop:
             self.current_floor += 1
-            self.direction = "up"
+            self.direction = Direction.UP      # make sure direction of the lift is updated
         elif self.current_floor > next_stop:
             self.current_floor -= 1
-            self.direction = "down"
+            self.direction = Direction.DOWN    # make sure direction of the lift is updated
         
         print(f"Moving {self.direction} to floor {self.current_floor}")
 
@@ -94,22 +102,22 @@ class Lift:
         # drop off any onboard requests that have reached their destination.
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
-            print(f"Served: {req}")
             self.onboard_requests.remove(req)
+            print(f"Served: {req}")
 
         # IF the lift is at the origin of a request, AND the capacity is not full, we pick up the request
         # we iterate over a COPY of the queue (.copy()) since we might modify it
         waiting_requests = self.request_queue.get_requests().copy()
         for req in waiting_requests:
             if req.origin_floor == self.current_floor and len(self.onboard_requests) < self.capacity:
-                print(f"Picked up: {req}")
                 req.picked_up = True
                 self.onboard_requests.append(req)
                 self.request_queue.remove_request(req)
+                print(f"Picked up: {req}")
 
         # # if there are no more requests, and no one onboard, reset direction to None
         if not self.request_queue.get_requests() and not self.onboard_requests:
-            self.direction = None
+            self.direction = Direction.NONE
 
     def run(self) -> None:
         """Run the lift simulation until all requests are served."""

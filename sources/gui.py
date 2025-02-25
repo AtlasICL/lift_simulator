@@ -1,4 +1,5 @@
 import tkinter as tk
+import os
 
 from lift import Lift
 from request_simulator import simulate_requests
@@ -15,33 +16,31 @@ from input_parser import parse_config
 # CONSTANTS:
 
 STEP_DELAY_MS: int = 800 # delay between lift steps in ms
-# this could be implemented using delta time class
-# but i am not smart enough -emre
 
-CONFIG_FILEPATH: str = "sources/config.json" # filepath for config.json
-# TODO: is it normal that it has to be sources/config.json?
-# answer: yes, dont worry
+CONFIG_FILEPATH: str = os.path.join("sources", "config.json") # filepath for config.json
 
 GUI_BACKGROUND_COLOUR: str = "white"
 GUI_LIFT_COLOUR: str = "blue"
+GUI_FLOOR_HEIGHT: int = 40
+GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"
 
 
 class LiftSimulatorGUI:
     def __init__(self, master, config_file):
         self.master = master
-        self.master.title("Best Team Lift Simulator")
+        self.master.title(GUI_WINDOW_TITLE)
         
         self.config = parse_config(config_file)
         self.total_floors = self.config["total_floors"]
         self.capacity = self.config["capacity"]
         self.num_requests = self.config["num_requests"]
 
-        self.floor_height = 40 # i had to move this up because self.canvas = tk.Canvas(...)
+        self.floor_height = GUI_FLOOR_HEIGHT # i had to move this up because self.canvas = tk.Canvas(...)
         # required the floor_height to determine the size of the window
         
         # Create the simulation objects
         self.lift = Lift(self.total_floors, self.capacity)
-        self.requests = simulate_requests(self.num_requests, self.total_floors)
+        self.requests = simulate_requests(n_requests=self.num_requests, max_floor=self.total_floors)
         for req in self.requests:
             self.lift.add_request(req)
         
