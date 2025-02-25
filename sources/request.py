@@ -16,8 +16,6 @@ class Request:
         return self.destination_floor < self.origin_floor
 
     def __repr__(self) -> str:
-        """
-        function for printing to the console
-        """
+        """Function for printing to the console."""
         status = "picked up" if self.picked_up else "waiting"
         return f"Request({self.origin_floor} -> {self.destination_floor}, {status})"
