@@ -196,19 +196,19 @@ We achieved this by setting 2 of the 3 parameters to constants, then randomly va
 
 - **Lift Class (lift.py)**:
 
-![LiftDiagram](images_for_documentation/lift_hierarchy.png)
+![LiftDiagram](images_for_report/lift_hierarchy.png)
 
 This class manages the lifts operations, including its movement, request queue, and the people inside. It uses attributes such as: current_floor (the current floor the lift is at); capacity (the max number of people the lift can hold); onboard_requests (a list of requests currently in the lift); and request_queue (a queue for handling requests outside of the lift). The methods for this class are as follows: add_requests (adds a new request to the lifts reqeust queue); move (moves the lift to the next requested floor based on its direction); and get_current_direction (determines wether the lift is moving up or down). 
 
 - **Request Class (request.py)**:
 
-![RequestDiagram](images_for_documentation/requests%20hierarchy.png)
+![RequestDiagram](images_for_report/requests%20hierarchy.png)
 
 This class represents each individual lift request, a request indicates a call to the lift from an origin floor to a destination floor. The attributes used are: origin_floor (the floor where the request originated); destination_floor (the target floor for the lift); and picked_up (a flag indicating whether the request has been fulfilled). The methods utilised are: is_valid_request (checks if the request is valid, ensuring both floors are within range and not the same); is_upward (checks if the request is for an upward movement); is_downward (checks if the request is for a downward movement); and __repr__ (returns a string representation of the request, displaying its status as either waiting or picked up).
 
 - **Request Queue Class (req_queue.py)**:
 
-![ReqQueueDiagram](images_for_documentation/req_queue%20hierarchy.png)
+![ReqQueueDiagram](images_for_report/req_queue%20hierarchy.png)
 
 This class implements a queue system for managing lift requests associated with a particular lift instance. It imports the Request class from request.py, which defines individual lift requests and their attributes. The primary attribute is requests, a list that stores active requests as instances of the Request class. The methods used include: add_request (adds a new request to the queue); remove_request (removes a specific request if it exists in the queue); remove_duplicate_requests (eliminates requests with the same origin and destination to prevent duplication); remove_served_requests (removes requests that have already been fulfilled by checking the order in which floors were visited); and __repr__ (returns a string representation of the queue, displaying the current pending requests).
 
@@ -222,7 +222,7 @@ This class manages the user interface for simulating the lift's behaviour using 
 
 - **UML Diagram**:
 
-![UMLDiagram](images_for_documentation/OOP_UML.png)
+![UMLDiagram](images_for_report/OOP_UML.png)
 
 This UML diagram is a visual representation of the structure of the lift system, -- leaving the rest of the explanation for now as it's likely that i'll need to change the UML diagram in the future. :D
 
