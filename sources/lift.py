@@ -18,16 +18,18 @@ class Lift:
     def next_stop(self) -> int | None:
         """
         Determine the next floor to move to.
-        Candidates are:
-          - All destinations of onboard requests.
-          - All origins of waiting requests (if there's capacity).
-        The method then chooses the candidate in the current direction (or sets a direction if idle).
+
+        This function is the main algorithm of our lift. 
+        
+        The lift has a direction, up or down. If the lift is upbound, the next_stop() function filters requests by ones which 
+        are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
         """
+
         candidates = []
-        # Include onboard requests (their destination floors)
+        # include onboard requests (their destination floors)
         for req in self.onboard_requests:
             candidates.append(req.destination_floor)
-        # Include waiting requests (their origin floors) if capacity allows
+        # include waiting requests (their origin floors) if capacity allows
         if len(self.onboard_requests) < self.capacity:
             for req in self.request_queue.get_requests():
                 candidates.append(req.origin_floor)
@@ -35,7 +37,7 @@ class Lift:
         if not candidates:
             return None
 
-        # If idle, pick a direction based on the first candidate relative to current floor.
+        # if idle, pick a direction
         if self.direction is None:
             for candidate in candidates:
                 if candidate > self.current_floor:
@@ -45,13 +47,14 @@ class Lift:
                     self.direction = "down"
                     break
 
-        # Depending on direction, filter candidates.
+        # filter the candidates based on the direction of the lift
+        # Explanation: if the lift is moving upward, we do not want to pick up any requests which want to go downwards
         if self.direction == "up":
             up_candidates = [floor for floor in candidates if floor > self.current_floor]
             if up_candidates:
                 return min(up_candidates)
             else:
-                # No upward candidate; switch direction.
+                # no one wants to go upwards (no valid up_candidates) so we switch direction
                 down_candidates = [floor for floor in candidates if floor < self.current_floor]
                 if down_candidates:
                     self.direction = "down"
@@ -73,7 +76,7 @@ class Lift:
             print("No pending requests. Lift is idle.")
             return
         
-        # Move one floor toward next_stop.
+        # make a [move] -> up / down 1 floor
         if self.current_floor < next_stop:
             self.current_floor += 1
             self.direction = "up"
@@ -83,19 +86,19 @@ class Lift:
         
         print(f"Moving {self.direction} to floor {self.current_floor}")
 
-        # Update visited floors (record every unique stop)
+        # update visited floors 
         if self.current_floor not in self.visited_floors:
             self.visited_floors.append(self.current_floor)
             print(f"Visited floors updated: {self.visited_floors}")
 
-        # Drop off any onboard requests that have reached their destination.
+        # drop off any onboard requests that have reached their destination.
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             print(f"Served: {req}")
             self.onboard_requests.remove(req)
 
-        # Pick up waiting requests if the lift is at their origin and there's capacity.
-        # Iterate over a copy since we might modify the queue.
+        # IF the lift is at the origin of a request, AND the capacity is not full, we pick up the request
+        # we iterate over a COPY of the queue (.copy()) since we might modify it
         waiting_requests = self.request_queue.get_requests().copy()
         for req in waiting_requests:
             if req.origin_floor == self.current_floor and len(self.onboard_requests) < self.capacity:
@@ -104,7 +107,7 @@ class Lift:
                 self.onboard_requests.append(req)
                 self.request_queue.remove_request(req)
 
-        # Reset direction if there are no pending requests.
+        # # if there are no more requests, and no one onboard, reset direction to None
         if not self.request_queue.get_requests() and not self.onboard_requests:
             self.direction = None
 
