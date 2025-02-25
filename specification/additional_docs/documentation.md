@@ -99,18 +99,12 @@ The file must be a valid json file.
 
 ## c) Build
 
-The program has **2 main entry points**:
-- `sources/main.py`: this entry point is to run the simulation in the command line.
-- `sources/gui.py`: this entry point is to run the simulation with the graphical user interface.  
+The entry point for the program is `sources/main.py`.  
+To run the code directly from the command line, use
+```
+python ./sources/main.py
+```
 
-We recommend that the user runs
-```
-python sources/gui.py
-```
-  
-Optionally, there are 2 additional entry points to the program, used for simulation data generation: 
-- `sources/testing/testing_script.py`: this entry point is to run multiple repeated simulations to generate simulation data. It outputs the 'moves' variable.
-- `sources/testing/ttsw_testing_script.py`: this entry point is to run multiple repeated simulations to generate simulation data. It outputs the 'TTSW' variable.
 
 
 
