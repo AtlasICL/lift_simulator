@@ -24,6 +24,9 @@ GUI_BACKGROUND_COLOUR: str = "white"
 GUI_LIFT_COLOUR: str = "blue"
 GUI_FLOOR_HEIGHT: int = 40
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"
+GUI_LIFT_TEXT_COLOUR: str = "white"
+GUI_LIFT_TEXT_FONT: str = "Arial"
+GUI_LIFT_TEXT_FONT_SIZE: int = 13
 
 
 class LiftSimulatorGUI:
@@ -104,8 +107,8 @@ class LiftSimulatorGUI:
             self.lift_text = self.canvas.create_text(
                 (x1 + x2) // 2, y,
                 text=str(onboard_count),
-                fill="white",
-                font=("Arial", 13, "bold"),
+                fill=GUI_LIFT_TEXT_COLOUR,
+                font=(GUI_LIFT_TEXT_FONT, GUI_LIFT_TEXT_FONT_SIZE, "bold"),
                 tags="lift_text"
             )
         else:
