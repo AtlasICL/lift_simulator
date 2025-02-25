@@ -1,28 +1,15 @@
-import time
-from lift import Lift
-from request_simulator import simulate_requests
-from input_parser import parse_config
+import tkinter as tk
+import os
 
-def run_simulation(config_file: str):
-    config = parse_config(config_file)
-    total_floors = config["total_floors"]
-    capacity = config["capacity"]
-    num_requests = config["num_requests"]
+from gui import LiftSimulatorGUI
 
-    lift = Lift(total_floors, capacity)
-    requests = simulate_requests(n_requests=num_requests, max_floor=total_floors)
+CONFIG_FILEPATH: str = os.path.join("sources", "config.json") # filepath for config.json
 
-    print("Generated Requests:")
-    for req in requests:
-        print(req)
-        lift.add_request(req)
 
-    while lift.request_queue.get_requests():
-        lift.move()
-        print(lift)
-        time.sleep(0.5)
-
-    print("FINISHED - ALL REQUESTS SERVED")
+def main() -> None:
+    root = tk.Tk()
+    app = LiftSimulatorGUI(root, CONFIG_FILEPATH)
+    root.mainloop()
 
 if __name__ == "__main__":
-    run_simulation("sources/config.json")
+    main()

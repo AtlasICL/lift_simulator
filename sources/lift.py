@@ -92,18 +92,18 @@ class Lift:
             self.current_floor -= 1
             self.direction = Direction.DOWN    # make sure direction of the lift is updated
         
-        print(f"Moving {self.direction} to floor {self.current_floor}")
+        # print(f"Moving {self.direction} to floor {self.current_floor}")
 
         # update visited floors 
         if self.current_floor not in self.visited_floors:
             self.visited_floors.append(self.current_floor)
-            print(f"Visited floors updated: {self.visited_floors}")
+            # print(f"Visited floors updated: {self.visited_floors}")
 
         # drop off any onboard requests that have reached their destination.
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             self.onboard_requests.remove(req)
-            print(f"Served: {req}")
+            # print(f"Served: {req}")
 
         # IF the lift is at the origin of a request, AND the capacity is not full, we pick up the request
         # we iterate over a COPY of the queue (.copy()) since we might modify it
@@ -113,7 +113,7 @@ class Lift:
                 req.picked_up = True
                 self.onboard_requests.append(req)
                 self.request_queue.remove_request(req)
-                print(f"Picked up: {req}")
+                # print(f"Picked up: {req}")
 
         # # if there are no more requests, and no one onboard, reset direction to None
         if not self.request_queue.get_requests() and not self.onboard_requests:
@@ -123,7 +123,7 @@ class Lift:
         """Run the lift simulation until all requests are served."""
         while self.request_queue.get_requests() or self.onboard_requests:
             self.move()
-            print(self)
+            # print(self)
             time.sleep(0.5)
 
     def __repr__(self) -> str:

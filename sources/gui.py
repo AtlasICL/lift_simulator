@@ -11,8 +11,6 @@ from input_parser import parse_config
 
 STEP_DELAY_MS: int = 800  # delay between lift steps in ms
 
-CONFIG_FILEPATH: str = os.path.join("sources", "config.json") # filepath for config.json
-
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
 GUI_DEFAULT_FONT: str = "Arial"
@@ -180,8 +178,3 @@ class LiftSimulatorGUI:
     def start_simulation(self):
         self.start_button.config(state="disabled") # should not be able to press start button once the simulation has been started
         self.simulation_step()
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = LiftSimulatorGUI(root, CONFIG_FILEPATH)
-    root.mainloop()
