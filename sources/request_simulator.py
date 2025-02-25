@@ -13,6 +13,6 @@ def simulate_requests(n_requests: int, max_floor: int) -> list[Request]:
         while end_floor == start_floor:
             end_floor = random.randint(1, max_floor)
         
-        req = Request(start_floor, end_floor, total_floors=max_floor)
+        req = Request(start_floor, end_floor)
         requests.append(req)
     return requests
