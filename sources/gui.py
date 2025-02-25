@@ -41,7 +41,7 @@ class LiftSimulatorGUI:
         self.floor_height = GUI_FLOOR_HEIGHT # i had to move this up because self.canvas = tk.Canvas(...)
         # required the floor_height to determine the size of the window
         
-        # Create the simulation objects
+        # these are the simulation objects
         self.lift = Lift(self.total_floors, self.capacity)
         self.requests = simulate_requests(n_requests=self.num_requests, max_floor=self.total_floors)
         for req in self.requests:
@@ -77,7 +77,7 @@ class LiftSimulatorGUI:
         line_end = canvas_width - RIGHT_MARGIN
 
         for i in range(1, self.total_floors + 1):
-            # calculate y-coordinate for floor i
+            # calculate y-coordinate for i-th floor
             y = (self.total_floors - i + 1) * self.floor_height
             # draw the floor line to span the full width of the canvas
             self.canvas.create_line(line_start, y, line_end, y, fill="gray", tags="floor")
@@ -91,7 +91,7 @@ class LiftSimulatorGUI:
         y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height # this gets the y coordinate for the lift rect
         LIFT_WIDTH = 50  # width of the lift rectangle
 
-        # Position the lift 20 pixels from the right edge.
+        # lift is positioned 20 px from right edge
         x2 = canvas_width - 20
         x1 = x2 - LIFT_WIDTH
 
@@ -120,22 +120,19 @@ class LiftSimulatorGUI:
         Draws little circles on each floor representing the number of waiting people,
         positioned so that they do not overlap the floor numbers.
         """
-        # Clear previous waiting indicators.
+        # reset waiting indicators
         self.canvas.delete("waiting")
         
-        # Count waiting requests per floor.
+        # get waiting request count per floor, to draw circles
         waiting_counts = {}
         for req in self.lift.request_queue.get_requests():
             waiting_counts[req.origin_floor] = waiting_counts.get(req.origin_floor, 0) + 1
 
-        # Draw circles for each floor that has waiting requests.
+        # draw circles for waiting requests
         for floor, count in waiting_counts.items():
             canvas_height = int(self.canvas["height"])
-            # Position at the vertical center of the floor's section.
             y = canvas_height - (floor - 0.5) * self.floor_height
 
-            # Adjust the x-coordinate so the circles don't overlap floor numbers.
-            # For example, if floor numbers are drawn at x ~30, start circles at x=60.
             start_x = 60  
             radius = 5
             for i in range(count):
