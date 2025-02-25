@@ -11,6 +11,21 @@ class Direction(Enum):
 
 
 class Lift:
+    """
+    This lass implements the main functionality of the lift, namely deciding where to go next (using next_stop() method),
+    and removing served requests from its request_queue.
+
+    Attributes:
+        current_floor (int): The current floor of the lift (starts at 1).
+        total_floors (int): Number of floors in the building.
+        capacity (int): Capacity of the lift (max requests on board).
+        request_queue (ReqQueue): Queue with the requests for the lift.
+        onboard_requests (list[Request]): List of requests which are onboard the lift at given time.
+        direction (Direction): Current direction of the elevator - enum: (UP, DOWN, or NONE).
+        visited_floors (list[int]): list of visited vloors.
+
+    """
+
     def __init__(self, total_floors: int, capacity: int):
         self.current_floor = 1           # Start at floor 1
         self.total_floors = total_floors
