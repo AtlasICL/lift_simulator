@@ -54,7 +54,7 @@ class LiftSimulatorGUI:
 
         self.canvas.pack(side="left", fill="both", expand=True)
         
-        # creates the tk frame
+        # create the tk frame
         self.info_frame = tk.Frame(master)
         self.info_frame.pack(side="right", fill="y", padx=10, pady=10)
         
@@ -79,9 +79,9 @@ class LiftSimulatorGUI:
         for i in range(1, self.total_floors + 1):
             # calculate y-coordinate for i-th floor
             y = (self.total_floors - i + 1) * self.floor_height
-            # draw the floor line to span the full width of the canvas
+            # floor line
             self.canvas.create_line(line_start, y, line_end, y, fill="gray", tags="floor")
-            # draw the floor number near the left margin (adjust as needed)
+            # write floor number
             self.canvas.create_text(LEFT_MARGIN + 20, y - self.floor_height/2, text=str(i), tags="floor")
 
     
