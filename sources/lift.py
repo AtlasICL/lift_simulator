@@ -1,4 +1,3 @@
-import time
 from enum import Enum
 
 from req_queue import ReqQueue
@@ -35,6 +34,22 @@ class Lift:
         self.current_floor_stop: bool = True            # whether or not the lift needs to stop at the current floor
 
 
+    def __get_candidate_floors(self) -> list[int]:
+        """
+        Helper function to get candidate floors for next_stop().
+        next_stop() will then filter these candidates and select appropriately.
+        """
+        candidate_floors: list[int] = []
+        # include onboard requests (their destination floors)
+        for req in self.onboard_requests:
+            candidate_floors.append(req.destination_floor)
+        # include waiting requests (their origin floors) if capacity allows
+        if len(self.onboard_requests) < self.capacity:
+            for req in self.request_queue.get_requests():
+                candidate_floors.append(req.origin_floor)
+        return candidate_floors
+
+
     def __filter_candidates(self, candidates: list[int], compare, select) -> int | None:
         """
         Helper function to filter candidate requests in next_floor() method.
@@ -53,14 +68,11 @@ class Lift:
         # print(self.onboard_requests)
         for req in self.onboard_requests:
             if req.destination_floor == self.current_floor:
-                print(f"Stopping at floor {self.current_floor} to drop off / pick up")
                 return True
         # check if anyone is waiting for the lift at current floor
         for req in self.request_queue.get_requests():
             if req.origin_floor == self.current_floor:
-                print(f"Stopping at floor {self.current_floor} to pick up / drop off")
                 return True
-        print(f"Not stopping at floor {self.current_floor}")
         return False
     
     
@@ -71,15 +83,8 @@ class Lift:
         The lift has a direction, up or down. If the lift is upbound, the next_floor() function filters requests by ones which 
         are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
         """
-        candidates = []
 
-        # include onboard requests (their destination floors)
-        for req in self.onboard_requests:
-            candidates.append(req.destination_floor)
-        # include waiting requests (their origin floors) if capacity allows
-        if len(self.onboard_requests) < self.capacity:
-            for req in self.request_queue.get_requests():
-                candidates.append(req.origin_floor)
+        candidates = self.__get_candidate_floors()
 
         if self.direction == Direction.NONE:
             self.direction = Direction.UP # if the lift is idle, we arbitrarily set direction to up
@@ -119,7 +124,6 @@ class Lift:
         """
         next_floor = self.next_floor()
         if next_floor is None:
-            print("No pending requests. Lift is idle.")
             return
         
         if self.current_floor < next_floor:
@@ -127,7 +131,7 @@ class Lift:
         elif self.current_floor > next_floor:
             self.current_floor -= 1
 
-        self.current_floor_stop = self.need_to_stop()
+        self.current_floor_stop = self.need_to_stop()  # update the member variable which shows whether or not the lift needs to stop
 
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
@@ -151,4 +155,5 @@ class Lift:
         return (f"Lift(current_floor={self.current_floor}, "
                 f"direction={self.direction}, "
                 f"waiting_queue={self.request_queue}, "
-                f"onboard_requests={self.onboard_requests})")
+                f"onboard_requests={self.onboard_requests}), "
+                f"stopping={self.current_floor_stop}")
