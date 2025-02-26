@@ -4,8 +4,8 @@
 # Table of contents
 
 - ## [1) Project overview and features](#1-project-overview-and-features-1)
-    - [a) Project description](#a-project-description-1)
-    - [b) Scope](#b-scope-1)
+    - [a) Project description and scope](#a-project-description-and-scope)
+    - [b) Features implemented](#b-features-implemented)
 
 - ## [2) Usage instructions](#2-usage-instructions-1)
     - [a) Requirements](#a-requirements-1)
@@ -33,18 +33,11 @@
 
 # 1) Project overview and features
 
-## a) Project description
+## a) Project description and scope
 
-In modern multi-story buildings, efficient lift systems are crucial for ensuring smooth operations and enhancing the user experience. Lift control systems, which are responsible for scheduling and managing the movement of lifts in response to passenger requests, play a signifcant role in achieving this efficiency. Traditional lift control systems often operate on simple algorithms, which may not adapt well to varying traffic patterns, leading to unnecessary wait times and inefficient response usage.
+## b) Features implemented
 
-This project aims to develop an inteligent and highly adaptable lift control system using advanced data structures and scheduling algorithms, including SCAN andf LOOK. By simulating real-world scenarios with multiple passengers and varying requests, the system will prioritise requests based on factors such as travel direction, waiting times and proximity to the lift. The design is scalable, able to accomodate a configurable numnber of floors and passengers. Additionally, this system will integrate performance metrics to compare the efficiency of different algorithms, ultimately demonstrating a comprehensive approach to managing lift operations while optimising user satisfaction. 
 
-Through the use of data structures like queues and priority queues, and implementing algorithms such as SCAN and LOOK, this project will explore how dynamic scheduling can improve lift systems' responsiveness to user requests, contributing to reduced wait times and overall operational efficiency.
-
-## b) Scope
-
-TODO: Describe scope of project
-example: we did not implement multiple lifts per building, but we DO have GUI, etc
 
 
 
@@ -68,13 +61,6 @@ The GUI (graphical user interface) requires the Python module tkinter. This libr
 ```
 pip install tk
 ```
-For generation of graphs, we used the following libraries:
-- pandas
-- matplotlib
-- numpy
-- seaborn
-
-However you do not need to install these to run the code. They are only necessary for generation of result graphs.
 
 
 ## b) Configuration instructions
@@ -95,7 +81,11 @@ The file must be a valid json file.
 
 - `total_floors` parameter specifies the number of floors in the building. **Note:** this value must be **strictly greater than 1** to be valid (explanation: a building with 1 floor does not require a lift, and a building with 0 or negative floors does not make sense).  
 - `capacity` parameter denotes the capacity of the lift, measured as $x$ number of people. In the example file, the lift has a maximum capacity of 5 people. **Note:** this value must be **greater than or equal to 0** (explanation: a lift with a capacity of 0 people does not make sense, and idem for negative capacity).
-- `num_requests` parameter specifies the number of requests (people wanting to go to a different floor) to be simulated. This value will affect both main.py and gui.py entry points. 
+- `num_requests` parameter specifies the number of requests (people wanting to go to a different floor) to be simulated. This value will affect both main.py and gui.py entry points.  
+
+If the user **fails to provide** any of the above parameters, they will be replaced by a default value.  
+If the user **specifies a negative number** for any of the above parameters, our code will raise a ValueError, with an appropriate message. (Note that number of floors must be > 1, as a building with 1 floor would not have a lift system.)  
+
 
 ## c) Build
 
@@ -123,7 +113,7 @@ python ./sources/main.py
 # 3) Performance analysis
 
 ### a) Overview  
-We performed thorough analysis of our lift manager's performance. We made use of test scripts, which repeatedly simulated the lift operation, while randomly varying parameters such as floor count, lift capacity, and number of requests.  
+We performed rigorous analysis of our lift system's performance. We made use of test scripts, which repeatedly simulated the lift operation, while randomly varying parameters such as floor count, lift capacity, and number of requests.  
 We systematically saved the results of our simulations in csv files, which are located in the `results/data/` directory.  
 Accross different simulation runs, the parameters that we varied were the ones present in the config.json file, in other words:
 - Number of floors in the building
@@ -178,8 +168,9 @@ We achieved this by setting 2 of the 3 parameters to constants, then randomly va
 
 ### d) Output format and generating graphs
 
-
-### e) Interpretation of results
+Our output data is in csv format, and available in the `results/data/` directory.  
+We generated our graphs using conventional python libraries (pandas, numpy, matplotlib, seaborn).  
+The graphs generated from our data are available in the `results/charts/` directory. Some are also included within our report.
 
 
 
