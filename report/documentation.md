@@ -136,11 +136,13 @@ This variable represents the occupancy ratio of the lift (how full it is) over t
 **Equations**  
 
 Formula for TTSW:  
+
 $$
 \text{TTSW(t)} = \sum_{t = \text{beginning of simulation}}^{\text{end of simulation}}{\text{NumberOfPeopleWaiting}(t)}
 $$
   
 Formula for LOROT:  
+
 $$
 \text{LOR}(t) = \frac{\text{occupancy}(t)}{\text{max\_capacity}}
 $$
@@ -155,6 +157,7 @@ $$
 $$
   
 Average LOROT over a run:
+
 $$
 \text{LOROT}_{\text{average}} = \frac{1}{T} \: \cdot \: \int_{t = \text{beginning of simulation}}^{\text{end of simulation}}{\text{LOR}(t)}\:dt
 $$  
