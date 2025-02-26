@@ -26,12 +26,13 @@ class Lift:
     """
 
     def __init__(self, total_floors: int, capacity: int):
-        self.current_floor = 1           # Start at floor 1
-        self.total_floors = total_floors
-        self.capacity = capacity
-        self.request_queue = ReqQueue()  # Waiting requests
-        self.onboard_requests = []       # Requests already picked up
-        self.direction = Direction.NONE  # enum, UP, DOWN, or NONE
+        self.current_floor: int = 1                     # Start at floor 1
+        self.total_floors: int = total_floors
+        self.capacity: int = capacity
+        self.request_queue: ReqQueue = ReqQueue()       # Waiting requests
+        self.onboard_requests: list[Request] = []       # Requests already picked up
+        self.direction = Direction.NONE                 # enum, direction is initialised to NONE
+        self.current_floor_stop: bool = True            # whether or not the lift needs to stop at the current floor
 
 
     def __filter_candidates(self, candidates: list[int], compare, select) -> int | None:
@@ -45,13 +46,28 @@ class Lift:
         valid_floors: list[int] = [floor for floor in candidates if compare(floor, self.current_floor) == True]
         return select(valid_floors) if valid_floors else None
     
+
+    def need_to_stop(self) -> bool:
+        """Helper function which returns True if the lift needs to stop and open the doors at current floor"""
+        # check if any onboard requests have reached their destination
+        # print(self.onboard_requests)
+        for req in self.onboard_requests:
+            if req.destination_floor == self.current_floor:
+                print(f"Stopping at floor {self.current_floor} to drop off / pick up")
+                return True
+        # check if anyone is waiting for the lift at current floor
+        for req in self.request_queue.get_requests():
+            if req.origin_floor == self.current_floor:
+                print(f"Stopping at floor {self.current_floor} to pick up / drop off")
+                return True
+        print(f"Not stopping at floor {self.current_floor}")
+        return False
+    
     
     def next_floor(self) -> int | None:
         """
         Determine the next floor to move to.
 
-        This function is the main algorithm of our lift. 
-        
         The lift has a direction, up or down. If the lift is upbound, the next_floor() function filters requests by ones which 
         are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
         """
@@ -96,6 +112,11 @@ class Lift:
 
 
     def move(self) -> None:
+        """
+        The move() method updates the current_floor based on which way the lift is moving (which is determined by next_floor() method).
+        move() also calls the member method need_to_stop() to see if the lift needs to stop at the current floor (to pick up or
+        drop off any requests).
+        """
         next_floor = self.next_floor()
         if next_floor is None:
             print("No pending requests. Lift is idle.")
@@ -106,7 +127,8 @@ class Lift:
         elif self.current_floor > next_floor:
             self.current_floor -= 1
 
-        # drop off any onboard requests that have reached their destination.
+        self.current_floor_stop = self.need_to_stop()
+
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             self.onboard_requests.remove(req)
@@ -123,13 +145,6 @@ class Lift:
         # # if there are no more requests, and no one onboard, reset direction to None
         if not self.request_queue.get_requests() and not self.onboard_requests:
             self.direction = Direction.NONE
-
-
-    def run(self) -> None:
-        """Run the lift simulation until all requests are served."""
-        while self.request_queue.get_requests() or self.onboard_requests:
-            self.move()
-            time.sleep(0.5)
 
 
     def __repr__(self) -> str:

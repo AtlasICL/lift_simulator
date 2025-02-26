@@ -17,8 +17,8 @@ def parse_config(file_path: str) -> dict:
 
     defaults = {
         "total_floors": 10,
-        "capacity": 4,
-        "num_requests": 30
+        "capacity": 5,
+        "num_requests": 10
     }
     
     try:

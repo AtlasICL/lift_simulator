@@ -8,7 +8,8 @@ from input_parser import parse_config
 
 # CONSTANTS:
 
-STEP_DELAY_MS: int = 800  # delay between lift steps in ms
+STEP_DELAY_MS: int = 700                             # delay between lift steps in ms
+LIFT_STOP_DELAY_MS: int = 700                  # waiting time for lift stop at a floor
 
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
@@ -161,12 +162,14 @@ class LiftSimulatorGUI:
                 f"Current Floor: {self.lift.current_floor}\n"
                 f"Direction: {self.__gui_display_lift_direction(self.lift.direction)}\n"
                 f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
-                f"Onboard: {len(self.lift.onboard_requests)}"
+                f"Onboard: {len(self.lift.onboard_requests)}\n"
+                f"Stopping: {"Yes" if self.lift.current_floor_stop else "No"}\n"
             )
             self.status_label.config(text=status_text)
             
-            # next step after STEP_DELAY_MS milliseconds (we have chose ~750), can be changed at top of file
-            self.master.after(STEP_DELAY_MS, self.simulation_step)
+            # next step after delay_ms milliseconds, depending on whether the lift needed to stop at current floor
+            delay_ms: int = STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop
+            self.master.after(delay_ms, self.simulation_step)
         else:
             self.status_label.config(text="Simulation finished!")
             self.start_button.config(state="normal")
