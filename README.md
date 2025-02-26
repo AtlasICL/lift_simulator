@@ -9,7 +9,7 @@
 
 ---
 
-**Find our report [here](specification/additional_docs/documentation.md)**  
+**Find our report [here](report/documentation.md)**  
 
 **Find our presentation video [here](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**
 
