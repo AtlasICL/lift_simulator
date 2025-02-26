@@ -4,8 +4,6 @@
 # Table of contents
 
 - ## [1) Project overview and features](#1-project-overview-and-features-1)
-    - [a) Project description and scope](#a-project-description-and-scope)
-    - [b) Features implemented](#b-features-implemented)
 
 - ## [2) Usage instructions](#2-usage-instructions-1)
     - [a) Requirements](#a-requirements-1)
@@ -23,7 +21,7 @@
 
 - ## [5) Screenshots and demo](#5-screenshots-and-demo-1)
 
-
+---
 
 
 
@@ -33,11 +31,12 @@
 
 # 1) Project overview and features
 
-## a) Project description and scope
-
-## b) Features implemented
-
-
+**Features we implemented**:
+- custom, efficient lift algorithm
+- GUI, with real-time status updates
+- rigorous testing with random variables
+- graphs for performance analysis
+- defensive programming for configuration settings
 
 
 
