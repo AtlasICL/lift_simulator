@@ -17,9 +17,7 @@
     - [d) Output format and generating graphs](#d-output-format-and-generating-graphs)
     - [e) Interpretation of results](#e-interpretation-of-results)
 
-- ## [4) Code documentation](#4-code-documentation-1)
-
-- ## [5) Screenshots and demo](#5-screenshots-and-demo-1)
+- ## [4) Who did what](#5-who-did-what-1)
 
 ---
 
@@ -183,52 +181,4 @@ The graphs generated from our data are available in the `results/charts/` direct
 
 
 
-
-
-# 4) Code documentation
-
-- **Lift Class (lift.py)**:
-
-![LiftDiagram](images_for_report/lift_hierarchy.png)
-
-This class manages the lifts operations, including its movement, request queue, and the people inside. It uses attributes such as: current_floor (the current floor the lift is at); capacity (the max number of people the lift can hold); onboard_requests (a list of requests currently in the lift); and request_queue (a queue for handling requests outside of the lift). The methods for this class are as follows: add_requests (adds a new request to the lifts reqeust queue); move (moves the lift to the next requested floor based on its direction); and get_current_direction (determines wether the lift is moving up or down). 
-
-- **Request Class (request.py)**:
-
-![RequestDiagram](images_for_report/requests%20hierarchy.png)
-
-This class represents each individual lift request, a request indicates a call to the lift from an origin floor to a destination floor. The attributes used are: origin_floor (the floor where the request originated); destination_floor (the target floor for the lift); and picked_up (a flag indicating whether the request has been fulfilled). The methods utilised are: is_valid_request (checks if the request is valid, ensuring both floors are within range and not the same); is_upward (checks if the request is for an upward movement); is_downward (checks if the request is for a downward movement); and __repr__ (returns a string representation of the request, displaying its status as either waiting or picked up).
-
-- **Request Queue Class (req_queue.py)**:
-
-![ReqQueueDiagram](images_for_report/req_queue%20hierarchy.png)
-
-This class implements a queue system for managing lift requests associated with a particular lift instance. It imports the Request class from request.py, which defines individual lift requests and their attributes. The primary attribute is requests, a list that stores active requests as instances of the Request class. The methods used include: add_request (adds a new request to the queue); remove_request (removes a specific request if it exists in the queue); remove_duplicate_requests (eliminates requests with the same origin and destination to prevent duplication); remove_served_requests (removes requests that have already been fulfilled by checking the order in which floors were visited); and __repr__ (returns a string representation of the queue, displaying the current pending requests).
-
-- **Request Simulator Class (request_simulator.py)**:
-
-This class represents the individual lift requests, made from a specific floor to another. Attributes used are: origin_floor (the floor where the request originated); destination_floor (the target floor for the lift); and picked_up (a flag indicating wether a request has been fulfilled). The methods utilised are: is_valid_request (checks if the request is valid (e.g, floors must be within range and cannot be the same)); is_upward (checks if the reqeut is for an upward movement); and is_downward (checks if the request is for a downward movement).
-
-- **GUI class (gui.py)**:
-
-This class manages the user interface for simulating the lift's behaviour using the tkinter library. It uses the following attributes: master (the root window of the GUI); config (configuration settings loaded from a JSON floor I(e.g., total floors)); lift (an instance of the lift class); requests (list of generated requests for the simulation); canvas (the canvas where the building and lift are drawn); start_button (the button to start the simulation); and status_label (a label to display the status of the simulation). The methods used within this class are: init (initialises the GUI, loads config, creates the lift object and prepares the canvas); draw_building (draws the bjuilding layout, including the floors and floor numbers); update_lift_position (updates the position of the lift on the canvas as it moves); update_waiting_indicators (draws circles representing people waiting at each floor); simulation_step (advances the simulation by one step, moving the lift and updating the display); and start_simulation (starts the simulation and disables the start button to prevent multiple starts).
-
-- **UML Diagram**:
-
-![UMLDiagram](images_for_report/OOP_UML.png)
-
-This UML diagram is a visual representation of the structure of the lift system, -- leaving the rest of the explanation for now as it's likely that i'll need to change the UML diagram in the future. :D
-
-
-
-
-
-
-
-
-
-
-# 5) Screenshots and demo
-
-TODO: we should complete this later, when the project is almost finished.
-
+# 4) Who did what
