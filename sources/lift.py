@@ -62,7 +62,7 @@ class Lift:
         return select(valid_floors) if valid_floors else None
     
 
-    def need_to_stop(self) -> bool:
+    def __need_to_stop(self) -> bool:
         """Helper function which returns True if the lift needs to stop and open the doors at current floor"""
         # check if any onboard requests have reached their destination
         # print(self.onboard_requests)
@@ -131,7 +131,7 @@ class Lift:
         elif self.current_floor > next_floor:
             self.current_floor -= 1
 
-        self.current_floor_stop = self.need_to_stop()  # update the member variable which shows whether or not the lift needs to stop
+        self.current_floor_stop = self.__need_to_stop()  # update the member variable which shows whether or not the lift needs to stop
 
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
