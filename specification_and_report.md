@@ -29,7 +29,7 @@
 
 # 1) Project overview and features
 
-**Features we implemented**:
+### Features we implemented:
 - custom, efficient lift algorithm
 - GUI, with real-time status updates
 - rigorous testing with random variables
