@@ -115,6 +115,10 @@ class Lift:
     
 
     def __offload_and_onload_requests(self) -> None:
+        """
+        This function offloads onboard requests which have reached their destination, and, if space is available,
+        picks up any waiting requests.
+        """
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             self.onboard_requests.remove(req)
@@ -124,9 +128,9 @@ class Lift:
         waiting_requests = self.request_queue.get_requests().copy()
         for req in waiting_requests:
             if req.origin_floor == self.current_floor and len(self.onboard_requests) < self.capacity:
+                self.onboard_requests.append(req) # add the request to list of onboard requests
+                self.request_queue.remove_request(req) # remove that request from the waiting request queue
                 req.picked_up = True
-                self.onboard_requests.append(req)
-                self.request_queue.remove_request(req)
 
 
     def move(self) -> None:
