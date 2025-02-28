@@ -83,10 +83,8 @@ class Lift:
     
     def __next_floor(self) -> int | None:
         """
-        Determine the next floor to move to.
-
-        The lift has a direction, up or down. If the lift is upbound, the __next_floor() function filters requests by ones which 
-        are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
+        This function determines which floor the lift should move to next. It achieves this by looking at the destinations of
+        onboard requests, and the origin floors of waiting requests. 
         """
         candidates = self.__get_candidate_floors()
 
@@ -95,8 +93,6 @@ class Lift:
             # if there are no upward requests, the rest of this method will deal with it appropriately
 
         # filter the candidates based on the direction of the lift
-        # Explanation: if the lift is moving upward, we do not want to pick up any requests which want to go downwards
-        # so we filter those requests which are upward
         if self.direction == Direction.UP:
             next_up = self.__filter_candidates(candidates, lambda x, y: x > y, min)
             if next_up is not None:
