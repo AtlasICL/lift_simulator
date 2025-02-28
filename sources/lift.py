@@ -57,8 +57,8 @@ class Lift:
         # include onboard requests (their destination floors)
         for req in self.onboard_requests:
             candidate_floors.append(req.destination_floor)
-        # include waiting requests (their origin floors) if capacity allows
-        if len(self.onboard_requests) < self.capacity:
+        # include waiting requests (their origin floors) if lift is not full
+        if not self._is_full():
             for req in self.request_queue.get_requests():
                 candidate_floors.append(req.origin_floor)
         return candidate_floors
