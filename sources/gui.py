@@ -228,6 +228,8 @@ class LiftSimulatorGUI:
             f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
             f"Onboard: {len(self.lift.onboard_requests)}\n"
             f"Stopping: {"Yes" if self.lift.current_floor_stop else "No"}\n"
+            f"People getting on: {"Yes" if self.lift.currently_onboarding else "No"}\n"
+            f"People getting off: {"Yes" if self.lift.currently_offboarding else "No"}\n"
         )
         return status_text
     

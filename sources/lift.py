@@ -41,6 +41,8 @@ class Lift:
         self.onboard_requests: list[Request] = []       # Requests already picked up
         self.direction = Direction.NONE                 # enum, direction is initialised to NONE
         self.current_floor_stop: bool = True            # whether or not the lift needs to stop at the current floor
+        self.currently_offboarding: bool = False        # whether or not people are currently getting off the lift
+        self.currently_onboarding: bool = False         # whether or not people are currently getting on the lift
 
 
     def _is_full(self) -> bool:
@@ -131,6 +133,8 @@ class Lift:
         """
         # drop off any served requests
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
+        if served_requests:
+            self.currently_offboarding = True # if a request has been served, set status to True
         for req in served_requests:
             self.onboard_requests.remove(req)
 
@@ -141,6 +145,13 @@ class Lift:
                 self.onboard_requests.append(req) # add the request to list of onboard requests
                 self.request_queue.remove_request(req) # remove that request from the waiting request queue
                 req.picked_up = True
+                self.currently_onboarding = True # a request onboarded, so we update the status to True
+
+
+    def _reset_onboarding_offboarding_status(self) -> None:
+        """Resets the status of self.currently_offboarding and self.currently_onboarding to False."""
+        self.currently_offboarding = False
+        self.currently_onboarding = False
 
 
     def move(self) -> None:
@@ -150,6 +161,7 @@ class Lift:
         drop off any requests).
         """
         next_floor = self._next_floor()
+        self._reset_onboarding_offboarding_status()
         if next_floor is None:
             return
         
