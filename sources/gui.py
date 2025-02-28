@@ -8,8 +8,8 @@ from input_parser import parse_config
 
 # CONSTANTS:
 
-STEP_DELAY_MS: int = 400                             # delay between lift steps in ms
-LIFT_STOP_DELAY_MS: int = 400                        # waiting time for lift stop at a floor
+STEP_DELAY_MS: int = 500                             # delay between lift steps in ms
+LIFT_STOP_DELAY_MS: int = 500                        # waiting time for lift stop at a floor
 LIFT_DEFAULT_SPEED_FACTOR: float = 1.0               # default speed multiplier for the lift
 LIFT_MIN_SPEED_FACTOR: float = 0.5                   # minimum speed multiplier for the lift
 LIFT_MAX_SPEED_FACTOR: float = 3.0                   # maximum speed multiplier for the lift
