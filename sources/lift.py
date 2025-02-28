@@ -11,7 +11,7 @@ class Direction(Enum):
 
 class Lift:
     """
-    This lass implements the main functionality of the lift, namely deciding where to go next (using next_floor() method),
+    This lass implements the main functionality of the lift, namely deciding where to go next (using __next_floor() method),
     and removing served requests from its request_queue.
 
     Attributes:
@@ -52,7 +52,7 @@ class Lift:
 
     def __filter_candidates(self, candidates: list[int], compare, select) -> int | None:
         """
-        Helper function to filter candidate requests in next_floor() method.
+        Helper function to filter candidate requests in __next_floor() method.
         Retrurns the selected floor, or None if no valid candidate.
         Compare takes in an inline (lambda) function which compares the candidate to the current floor based on 
         the lift's current direction (so x>y or x<y based on if lift direction is upward or downward).
@@ -76,11 +76,11 @@ class Lift:
         return False
     
     
-    def next_floor(self) -> int | None:
+    def __next_floor(self) -> int | None:
         """
         Determine the next floor to move to.
 
-        The lift has a direction, up or down. If the lift is upbound, the next_floor() function filters requests by ones which 
+        The lift has a direction, up or down. If the lift is upbound, the __next_floor() function filters requests by ones which 
         are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
         """
 
@@ -114,25 +114,9 @@ class Lift:
                 return next_up
             
         return None  # if no candidates were valid, we return None and the lift goes idle
+    
 
-
-    def move(self) -> None:
-        """
-        The move() method updates the current_floor based on which way the lift is moving (which is determined by next_floor() method).
-        move() also calls the member method need_to_stop() to see if the lift needs to stop at the current floor (to pick up or
-        drop off any requests).
-        """
-        next_floor = self.next_floor()
-        if next_floor is None:
-            return
-        
-        if self.current_floor < next_floor:
-            self.current_floor += 1
-        elif self.current_floor > next_floor:
-            self.current_floor -= 1
-
-        self.current_floor_stop = self.__need_to_stop()  # update the member variable which shows whether or not the lift needs to stop
-
+    def __onload_and_offload_requests(self) -> None:
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             self.onboard_requests.remove(req)
@@ -145,6 +129,27 @@ class Lift:
                 req.picked_up = True
                 self.onboard_requests.append(req)
                 self.request_queue.remove_request(req)
+
+
+    def move(self) -> None:
+        """
+        The move() method updates the current_floor based on which way the lift is moving (which is determined by __next_floor() method).
+        move() also calls the member method need_to_stop() to see if the lift needs to stop at the current floor (to pick up or
+        drop off any requests).
+        """
+        next_floor = self.__next_floor()
+        if next_floor is None:
+            return
+        
+        if self.current_floor < next_floor:
+            self.current_floor += 1
+        elif self.current_floor > next_floor:
+            self.current_floor -= 1
+
+        self.current_floor_stop = self.__need_to_stop()  # update the member variable which shows whether or not the lift needs to stop
+
+        if self.current_floor_stop:
+            self.__onload_and_offload_requests()
 
         # # if there are no more requests, and no one onboard, reset direction to None
         if not self.request_queue.get_requests() and not self.onboard_requests:
