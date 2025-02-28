@@ -8,8 +8,8 @@ from input_parser import parse_config
 
 # CONSTANTS:
 
-STEP_DELAY_MS: int = 500                             # delay between lift steps in ms
-LIFT_STOP_DELAY_MS: int = 700                        # waiting time for lift stop at a floor
+STEP_DELAY_MS: int = 200                             # delay between lift steps in ms
+LIFT_STOP_DELAY_MS: int = 500                        # waiting time for lift stop at a floor
 
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
@@ -63,6 +63,10 @@ class LiftSimulatorGUI:
         
         self.start_button = tk.Button(self.info_frame, text="Start Simulation", command=self.start_simulation)
         self.start_button.pack(pady=10)
+
+        self.add_requests_button = tk.Button(self.info_frame, text="Add new requests", command=lambda: self._add_requests(5))
+        self.add_requests_button.pack(pady=10)
+        self.add_requests_button.config(state="disabled")  # should not be able to add new requests before simulation has started
         
         self._draw_building()
         self.lift_rect = None
@@ -148,7 +152,15 @@ class LiftSimulatorGUI:
     def _gui_display_lift_direction(self, lift_direction) -> str:
         direction_display: dict = {Direction.UP: "up  ", Direction.DOWN : "down", Direction.NONE : "none"}
         return direction_display[lift_direction]
+    
 
+    def _add_requests(self, n: int) -> None:
+        """This function adds n new requests for the lift."""
+        new_requests = simulate_requests(n_requests=n, max_floor=self.total_floors)
+        for req in new_requests:
+            self.requests.append(req)
+            self.lift.request_queue.add_request(req)
+    
 
     def simulation_step(self):
         """Performs a simulation step and schedules the next one."""
@@ -176,8 +188,10 @@ class LiftSimulatorGUI:
         else:
             self.status_label.config(text="Simulation finished!\nPlease give us a first! <3")
             self.start_button.destroy()
+            self.add_requests_button.destroy()
 
 
     def start_simulation(self):
         self.start_button.config(state="disabled") # should not be able to press start button once the simulation has been started
+        self.add_requests_button.config(state="normal") # can now add new requests
         self.simulation_step()

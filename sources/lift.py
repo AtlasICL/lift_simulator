@@ -168,13 +168,6 @@ class Lift:
             self.direction = Direction.NONE
 
 
-    def _add_requests(self, n: int) -> None:
-        """This function adds n new requests for the lift."""
-        new_requests: list[Request] = simulate_requests(n, self.total_floors)
-        for req in new_requests:
-            self.request_queue.add_request(req)
-    
-
     def __repr__(self) -> str:
         return (f"Lift(current_floor={self.current_floor}, "
                 f"direction={self.direction}, "
