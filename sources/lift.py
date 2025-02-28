@@ -34,6 +34,11 @@ class Lift:
         self.current_floor_stop: bool = True            # whether or not the lift needs to stop at the current floor
 
 
+    def __is_full(self) -> bool:
+        """Returns True if lift is at max capacity, False otherwise."""
+        return len(self.onboard_requests) >= self.capacity
+
+
     def __get_candidate_floors(self) -> list[int]:
         """
         Helper function to get candidate floors for next_stop().
@@ -119,15 +124,15 @@ class Lift:
         This function offloads onboard requests which have reached their destination, and, if space is available,
         picks up any waiting requests.
         """
+        # drop off any served requests
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             self.onboard_requests.remove(req)
 
-        # IF the lift is at the origin of a request, AND the capacity is not full, we pick up the request
         # we iterate over a COPY of the queue (.copy()) since we might modify it
         waiting_requests = self.request_queue.get_requests().copy()
         for req in waiting_requests:
-            if req.origin_floor == self.current_floor and len(self.onboard_requests) < self.capacity:
+            if req.origin_floor == self.current_floor and not self.__is_full():
                 self.onboard_requests.append(req) # add the request to list of onboard requests
                 self.request_queue.remove_request(req) # remove that request from the waiting request queue
                 req.picked_up = True
