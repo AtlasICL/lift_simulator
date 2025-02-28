@@ -64,10 +64,10 @@ class LiftSimulatorGUI:
         self.start_button = tk.Button(self.info_frame, text="Start Simulation", command=self.start_simulation)
         self.start_button.pack(pady=10)
         
-        self.draw_building()
+        self.__draw_building()
         self.lift_rect = None
     
-    def draw_building(self):
+    def __draw_building(self):
         """Draw floor lines and labels on the canvas based on the current canvas width."""
         self.canvas.delete("floor")
         canvas_width = int(self.canvas["width"]) # gets current canvas width
@@ -85,7 +85,7 @@ class LiftSimulatorGUI:
             self.canvas.create_text(LEFT_MARGIN + 20, y - self.floor_height/2, text=str(i), tags="floor")
 
     
-    def update_lift_position(self):
+    def __update_lift_position(self):
         canvas_height = int(self.canvas["height"])
         canvas_width = int(self.canvas["width"])
         y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height # this gets the y coordinate for the lift rect
@@ -115,7 +115,7 @@ class LiftSimulatorGUI:
             self.canvas.coords(self.lift_text, (x1 + x2) // 2, y)
 
 
-    def update_waiting_indicators(self):
+    def __update_waiting_indicators(self):
         """
         Draws little circles on each floor representing the number of waiting people,
         positioned so that they do not overlap the floor numbers.
@@ -154,8 +154,8 @@ class LiftSimulatorGUI:
         # if so, we go through the logic
         if self.lift.request_queue.get_requests() or self.lift.onboard_requests:
             self.lift.move() # simulation goes forward by 1 move
-            self.update_lift_position() # update the position of the lift
-            self.update_waiting_indicators() # update the little circles of people waiting on each floor
+            self.__update_lift_position() # update the position of the lift
+            self.__update_waiting_indicators() # update the little circles of people waiting on each floor
             
             # update status label (on the right) with current info
             status_text = (
@@ -171,9 +171,9 @@ class LiftSimulatorGUI:
             delay_ms: int = STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop
             self.master.after(delay_ms, self.simulation_step)
         else:
-            self.status_label.config(text="Simulation finished!")
-            self.start_button.config(state="normal")
-    
+            self.status_label.config(text="Simulation finished!\nPlease give us a first! <3")
+            self.start_button.destroy()
+
     def start_simulation(self):
         self.start_button.config(state="disabled") # should not be able to press start button once the simulation has been started
         self.simulation_step()
