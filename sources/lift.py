@@ -114,7 +114,7 @@ class Lift:
         return None  # if no candidates were valid, we return None and the lift goes idle
     
 
-    def __onload_and_offload_requests(self) -> None:
+    def __offload_and_onload_requests(self) -> None:
         served_requests = [req for req in self.onboard_requests if req.destination_floor == self.current_floor]
         for req in served_requests:
             self.onboard_requests.remove(req)
@@ -147,9 +147,9 @@ class Lift:
         self.current_floor_stop = self.__need_to_stop()  # update the member variable which shows whether or not the lift needs to stop
 
         if self.current_floor_stop:
-            self.__onload_and_offload_requests()
+            self.__offload_and_onload_requests()
 
-        # # if there are no more requests, and no one onboard, reset direction to None
+        # if there are no more requests, and no one onboard, reset direction to None
         if not self.request_queue.get_requests() and not self.onboard_requests:
             self.direction = Direction.NONE
 
