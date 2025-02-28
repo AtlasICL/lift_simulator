@@ -64,11 +64,11 @@ class LiftSimulatorGUI:
         self.start_button = tk.Button(self.info_frame, text="Start Simulation", command=self.start_simulation)
         self.start_button.pack(pady=10)
         
-        self.__draw_building()
+        self._draw_building()
         self.lift_rect = None
     
-    
-    def __draw_building(self):
+
+    def _draw_building(self):
         """Draw floor lines and labels on the canvas based on the current canvas width."""
         self.canvas.delete("floor")
         canvas_width = int(self.canvas["width"]) # gets current canvas width
@@ -86,7 +86,7 @@ class LiftSimulatorGUI:
             self.canvas.create_text(LEFT_MARGIN + 20, y - self.floor_height/2, text=str(i), tags="floor")
 
     
-    def __update_lift_position(self):
+    def _update_lift_position(self):
         canvas_height = int(self.canvas["height"])
         canvas_width = int(self.canvas["width"])
         y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height # this gets the y coordinate for the lift rect
@@ -116,7 +116,7 @@ class LiftSimulatorGUI:
             self.canvas.coords(self.lift_text, (x1 + x2) // 2, y)
 
 
-    def __update_waiting_indicators(self):
+    def _update_waiting_indicators(self):
         """
         Draws little circles on each floor representing the number of waiting people,
         positioned so that they do not overlap the floor numbers.
@@ -145,7 +145,7 @@ class LiftSimulatorGUI:
                 )
 
 
-    def __gui_display_lift_direction(self, lift_direction) -> str:
+    def _gui_display_lift_direction(self, lift_direction) -> str:
         direction_display: dict = {Direction.UP: "up  ", Direction.DOWN : "down", Direction.NONE : "none"}
         return direction_display[lift_direction]
 
@@ -157,13 +157,13 @@ class LiftSimulatorGUI:
         # if so, we go through the logic
         if self.lift.request_queue.get_requests() or self.lift.onboard_requests:
             self.lift.move() # simulation goes forward by 1 move
-            self.__update_lift_position() # update the position of the lift
-            self.__update_waiting_indicators() # update the little circles of people waiting on each floor
+            self._update_lift_position() # update the position of the lift
+            self._update_waiting_indicators() # update the little circles of people waiting on each floor
             
             # update status label (on the right) with current info
             status_text = (
                 f"Current Floor: {self.lift.current_floor}\n"
-                f"Direction: {self.__gui_display_lift_direction(self.lift.direction)}\n"
+                f"Direction: {self._gui_display_lift_direction(self.lift.direction)}\n"
                 f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
                 f"Onboard: {len(self.lift.onboard_requests)}\n"
                 f"Stopping: {"Yes" if self.lift.current_floor_stop else "No"}\n"
