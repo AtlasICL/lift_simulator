@@ -23,6 +23,12 @@ GUI_LIFT_COLOUR: str = "blue"                        # fill colour of the lift r
 
 GUI_FLOOR_HEIGHT: int = 40                           # height of each floor
 
+WAITING_INDICATOR_X_OFFSET: int = 60                 # x offset (in pixels) of the leftmost waiting indicator
+# this is necessary, as otherwise the waiting indicators overlap with the floor numbers
+WAITING_INDICATOR_RADIUS: int = 5                    # radius of waiting indicator circles
+
+SPEED_SLIDER_LABEL: str = "Simulation speed"         # label for speed slider element
+
 GUI_LIFT_TEXT_COLOUR: str = "white"                  # text colour for onboard counter in lift rectangle
 GUI_LIFT_TEXT_FONT: str = GUI_DEFAULT_FONT           # text font for onboard counter in lift rectangle
 GUI_LIFT_TEXT_FONT_SIZE: int = 13                    # text font size for onboard counter in lift rectangle
@@ -119,7 +125,7 @@ class LiftSimulatorGUI:
             to=LIFT_MAX_SPEED_FACTOR,
             resolution=0.25,
             orient="horizontal",
-            label="Simulation speed",
+            label=SPEED_SLIDER_LABEL,
             variable=self.speed_multiplier,
             command=self._update_speed_multiplier 
         )
@@ -158,33 +164,36 @@ class LiftSimulatorGUI:
             self.canvas.coords(self.lift_text, (x1 + x2) // 2, y)
 
 
+    def _get_waiting_counters(self) -> dict[int, int]:
+        """
+        Returns a dictionary of type [int, int], which represents the number of people (requests) waiting on each floor.
+        Example: {1: 3, 2: 7, 3: 0}
+        """
+        waiting_counts = {}
+        for req in self.lift.request_queue.get_requests():
+            waiting_counts[req.origin_floor] = waiting_counts.get(req.origin_floor, 0) + 1
+        return waiting_counts
+    
+
+    def _draw_waiting_indicators(self, waiting_counts: dict[int, int]) -> None:
+        for floor, count in waiting_counts.items():
+            canvas_height = int(self.canvas["height"])
+            y = canvas_height - (floor - 0.5) * self.floor_height
+            start_x = WAITING_INDICATOR_X_OFFSET  
+            radius = WAITING_INDICATOR_RADIUS
+            for i in range(count):
+                circle_x = start_x + i * (2 * radius + 2)
+                self.canvas.create_oval(circle_x-radius, y-radius, circle_x+radius, y+radius, fill="red", tags="waiting")
+    
+
     def _update_waiting_indicators(self) -> None:
         """
         Draws little circles on each floor representing the number of waiting people,
         positioned so that they do not overlap the floor numbers.
         """
-        # reset waiting indicators
-        self.canvas.delete("waiting")
-        
-        # get waiting request count per floor, to draw circles
-        waiting_counts = {}
-        for req in self.lift.request_queue.get_requests():
-            waiting_counts[req.origin_floor] = waiting_counts.get(req.origin_floor, 0) + 1
-
-        # draw circles for waiting requests
-        for floor, count in waiting_counts.items():
-            canvas_height = int(self.canvas["height"])
-            y = canvas_height - (floor - 0.5) * self.floor_height
-
-            start_x = 60  
-            radius = 5
-            for i in range(count):
-                circle_x = start_x + i * (2 * radius + 2)
-                self.canvas.create_oval(
-                    circle_x - radius, y - radius,
-                    circle_x + radius, y + radius,
-                    fill="red", tags="waiting"
-                )
+        self.canvas.delete("waiting") # reset waiting indicators
+        waiting_counts: dict[int, int] = self._get_waiting_counters() # get waiting counts
+        self._draw_waiting_indicators(waiting_counts) # draw waiting indicators
 
 
     def _gui_display_lift_direction(self, lift_direction) -> str:
