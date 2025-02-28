@@ -1,6 +1,6 @@
 import json
 
-def parse_config(file_path: str) -> dict:
+def parse_config(file_path: str) -> dict[str, int]:
     """
     Reads configuration from a JSON file and returns a dictionary.
 
@@ -15,7 +15,7 @@ def parse_config(file_path: str) -> dict:
         num_requests: 30
     """
 
-    defaults = {
+    defaults: dict[str, int] = {
         "total_floors": 15,
         "capacity": 5,
         "num_requests": 10
