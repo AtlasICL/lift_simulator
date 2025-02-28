@@ -83,7 +83,6 @@ class Lift:
         The lift has a direction, up or down. If the lift is upbound, the __next_floor() function filters requests by ones which 
         are upbound, and picks them up if their origin floor is the lift's current floor, and the lift is not full.
         """
-
         candidates = self.__get_candidate_floors()
 
         if self.direction == Direction.NONE:
@@ -112,7 +111,6 @@ class Lift:
             if next_up is not None:
                 self.direction = Direction.UP  # we switched direction, so we update self.direction
                 return next_up
-            
         return None  # if no candidates were valid, we return None and the lift goes idle
     
 

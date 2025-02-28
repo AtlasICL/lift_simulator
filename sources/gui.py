@@ -8,8 +8,8 @@ from input_parser import parse_config
 
 # CONSTANTS:
 
-STEP_DELAY_MS: int = 700                             # delay between lift steps in ms
-LIFT_STOP_DELAY_MS: int = 700                  # waiting time for lift stop at a floor
+STEP_DELAY_MS: int = 500                             # delay between lift steps in ms
+LIFT_STOP_DELAY_MS: int = 700                        # waiting time for lift stop at a floor
 
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
