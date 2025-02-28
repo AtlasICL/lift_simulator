@@ -13,7 +13,7 @@ LIFT_STOP_DELAY_MS: int = 700                        # waiting time for lift sto
 
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
-GUI_DEFAULT_FONT: str = "Arial"
+GUI_DEFAULT_FONT: str = "Arial"                      # default font used in the GUI
 
 GUI_LIFT_COLOUR: str = "blue"                        # fill colour of the lift rectangle 
 
