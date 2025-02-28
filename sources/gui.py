@@ -59,29 +59,32 @@ class LiftSimulatorGUI:
         # the height of the window based on the number of floors the user has specified.
         # i implemented this otherwise the window looked really ugly for certain input parameters
         self.canvas = tk.Canvas(master, width=350, height=canvas_height, bg=GUI_BACKGROUND_COLOUR)
-
         self.canvas.pack(side="left", fill="both", expand=True)
         
         # create the tk frame
         self.info_frame = tk.Frame(master)
         self.info_frame.pack(side="right", fill="y", padx=10, pady=10)
         
+        # create and render all the visual elements
+        self._draw_all_elements()
+        self.lift_rect = None
+
+
+    def _draw_status_label(self) -> None:
         self.status_label = tk.Label(self.info_frame, text=GUI_STATUS_TEXT_TITLE, font=(GUI_STATUS_TEXT_FONT, GUI_STATUS_TEXT_FONT_SIZE))
         self.status_label.pack(pady=10)
-        
+
+
+    def _draw_start_button(self) -> None:
         self.start_button = tk.Button(self.info_frame, text="Start Simulation", command=self.start_simulation)
         self.start_button.pack(pady=10)
 
+
+    def _draw_add_requests_button(self) -> None:
         self.add_requests_button = tk.Button(self.info_frame, text="Add new requests", command=lambda: self._add_requests(5))
         self.add_requests_button.pack(pady=10)
         self.add_requests_button.config(state="disabled")  # should not be able to add new requests before simulation has started
 
-        self._create_speed_slider()
-        self.speed_slider.pack(pady=10)
-        
-        self._draw_building()
-        self.lift_rect = None
-    
 
     def _draw_building(self):
         """Draw floor lines and labels on the canvas based on the current canvas width."""
@@ -100,6 +103,14 @@ class LiftSimulatorGUI:
             # write floor number
             self.canvas.create_text(LEFT_MARGIN + 20, y - self.floor_height/2, text=str(i), tags="floor")
 
+
+    def _draw_all_elements(self) -> None:
+        self._draw_status_label()
+        self._draw_start_button()
+        self._draw_add_requests_button()
+        self._create_speed_slider()
+        self._draw_building()
+
     
     def _create_speed_slider(self) -> None:
         self.speed_slider = tk.Scale(
@@ -114,6 +125,7 @@ class LiftSimulatorGUI:
         )
         self.speed_slider.pack(pady=10)
         self.speed_slider.config(state="disabled") # not active before start of simulation
+        self.speed_slider.pack(pady=10)
 
     
     def _update_lift_position(self) -> None:
@@ -220,9 +232,8 @@ class LiftSimulatorGUI:
 
     def simulation_step(self) -> None:
         """Performs a simulation step and schedules the next one."""
-        # the following if statement checks whether there is, either
-        # at least 1 request still remaining, or at least 1 person still on the lift
-        # if so, we go through the logic
+        # the following if statement checks whether there is, either at least 1 request still remaining,
+        # or at least 1 person still on the lift; if so, we go through the logic
         if self.lift.request_queue.get_requests() or self.lift.onboard_requests:
             self.lift.move() # simulation goes forward by 1 move
             self._update_lift_position() # update the position of the lift
