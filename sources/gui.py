@@ -8,8 +8,9 @@ from input_parser import parse_config
 
 # CONSTANTS:
 
-STEP_DELAY_MS: int = 200                             # delay between lift steps in ms
-LIFT_STOP_DELAY_MS: int = 500                        # waiting time for lift stop at a floor
+STEP_DELAY_MS: int = 400                             # delay between lift steps in ms
+LIFT_STOP_DELAY_MS: int = 400                        # waiting time for lift stop at a floor
+LIFT_DEFAULT_SPEED_FACTOR: float = 1.0               # default speed multiplier for the lift
 
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
@@ -34,9 +35,11 @@ class LiftSimulatorGUI:
         self.master.title(GUI_WINDOW_TITLE)
         
         self.config = parse_config(config_file)
-        self.total_floors = self.config["total_floors"]
-        self.capacity = self.config["capacity"]
-        self.num_requests = self.config["num_requests"]
+        self.total_floors: int = self.config["total_floors"]
+        self.capacity: int = self.config["capacity"]
+        self.num_requests: int = self.config["num_requests"]
+
+        # self.speed_multiplier: float = LIFT_DEFAULT_SPEED_FACTOR
 
         self.floor_height = GUI_FLOOR_HEIGHT # i had to move this up because self.canvas = tk.Canvas(...)
         # required the floor_height to determine the size of the window
@@ -67,6 +70,19 @@ class LiftSimulatorGUI:
         self.add_requests_button = tk.Button(self.info_frame, text="Add new requests", command=lambda: self._add_requests(5))
         self.add_requests_button.pack(pady=10)
         self.add_requests_button.config(state="disabled")  # should not be able to add new requests before simulation has started
+
+        self.speed_multiplier = tk.DoubleVar(value=LIFT_DEFAULT_SPEED_FACTOR)
+        self.speed_slider = tk.Scale(
+            self.info_frame,
+            from_=0.5, 
+            to=3.0,
+            resolution=0.1,
+            orient="horizontal",
+            label="Speed",
+            variable=self.speed_multiplier,
+            command=self._update_speed_multiplier 
+        )
+        self.speed_slider.pack(pady=10)
         
         self._draw_building()
         self.lift_rect = None
@@ -160,6 +176,10 @@ class LiftSimulatorGUI:
         for req in new_requests:
             self.requests.append(req)
             self.lift.request_queue.add_request(req)
+
+    
+    def _update_speed_multiplier(self, val: float) -> None:
+        self.speed_multiplier = tk.DoubleVar(value=val)
     
 
     def simulation_step(self):
@@ -183,8 +203,8 @@ class LiftSimulatorGUI:
             self.status_label.config(text=status_text)
             
             # next step after delay_ms milliseconds, depending on whether the lift needed to stop at current floor
-            delay_ms: int = STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop
-            self.master.after(delay_ms, self.simulation_step)
+            delay_ms: int = (STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop) * (1.0/self.speed_multiplier.get())
+            self.master.after(int(delay_ms), self.simulation_step)
         else:
             self.status_label.config(text="Simulation finished!\nPlease give us a first! <3")
             self.start_button.destroy()
