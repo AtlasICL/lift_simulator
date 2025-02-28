@@ -11,6 +11,9 @@ from input_parser import parse_config
 STEP_DELAY_MS: int = 400                             # delay between lift steps in ms
 LIFT_STOP_DELAY_MS: int = 400                        # waiting time for lift stop at a floor
 LIFT_DEFAULT_SPEED_FACTOR: float = 1.0               # default speed multiplier for the lift
+LIFT_MIN_SPEED_FACTOR: float = 0.5                   # minimum speed multiplier for the lift
+LIFT_MAX_SPEED_FACTOR: float = 3.0                   # maximum speed multiplier for the lift
+
 
 GUI_BACKGROUND_COLOUR: str = "white"                 # background colour for the main window
 GUI_WINDOW_TITLE: str = "Best Team Lift Simulator"   # window title
@@ -28,6 +31,8 @@ GUI_STATUS_TEXT_TITLE: str = "Lift Status"           # title for the status text
 GUI_STATUS_TEXT_FONT: str = GUI_DEFAULT_FONT         # text font for status text (set to default, Arial)
 GUI_STATUS_TEXT_FONT_SIZE: int = 14                  # text font size for status text
 
+GUI_SIMULATION_FINISHED_TEXT: str = "Simulation finished!\nPlease give us a first! <3"
+
 
 class LiftSimulatorGUI:
     def __init__(self, master, config_file):
@@ -39,7 +44,7 @@ class LiftSimulatorGUI:
         self.capacity: int = self.config["capacity"]
         self.num_requests: int = self.config["num_requests"]
 
-        # self.speed_multiplier: float = LIFT_DEFAULT_SPEED_FACTOR
+        self.speed_multiplier = tk.DoubleVar(value=LIFT_DEFAULT_SPEED_FACTOR)
 
         self.floor_height = GUI_FLOOR_HEIGHT # i had to move this up because self.canvas = tk.Canvas(...)
         # required the floor_height to determine the size of the window
@@ -71,17 +76,7 @@ class LiftSimulatorGUI:
         self.add_requests_button.pack(pady=10)
         self.add_requests_button.config(state="disabled")  # should not be able to add new requests before simulation has started
 
-        self.speed_multiplier = tk.DoubleVar(value=LIFT_DEFAULT_SPEED_FACTOR)
-        self.speed_slider = tk.Scale(
-            self.info_frame,
-            from_=0.5, 
-            to=3.0,
-            resolution=0.1,
-            orient="horizontal",
-            label="Speed",
-            variable=self.speed_multiplier,
-            command=self._update_speed_multiplier 
-        )
+        self._create_speed_slider()
         self.speed_slider.pack(pady=10)
         
         self._draw_building()
@@ -104,6 +99,20 @@ class LiftSimulatorGUI:
             self.canvas.create_line(line_start, y, line_end, y, fill="gray", tags="floor")
             # write floor number
             self.canvas.create_text(LEFT_MARGIN + 20, y - self.floor_height/2, text=str(i), tags="floor")
+
+    
+    def _create_speed_slider(self) -> None:
+        self.speed_slider = tk.Scale(
+            self.info_frame,
+            from_=LIFT_MIN_SPEED_FACTOR, 
+            to=LIFT_MAX_SPEED_FACTOR,
+            resolution=0.25,
+            orient="horizontal",
+            label="Simulation speed",
+            variable=self.speed_multiplier,
+            command=self._update_speed_multiplier 
+        )
+        self.speed_slider.pack(pady=10)
 
     
     def _update_lift_position(self):
@@ -166,6 +175,7 @@ class LiftSimulatorGUI:
 
 
     def _gui_display_lift_direction(self, lift_direction) -> str:
+        """Helper function for printing lift direction."""
         direction_display: dict = {Direction.UP: "up  ", Direction.DOWN : "down", Direction.NONE : "none"}
         return direction_display[lift_direction]
     
@@ -180,7 +190,32 @@ class LiftSimulatorGUI:
     
     def _update_speed_multiplier(self, val: float) -> None:
         self.speed_multiplier = tk.DoubleVar(value=val)
+
+
+    def _get_step_delay_ms(self) -> int:
+        """Returns delay before next step in ms"""
+        delay: float = (STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop) * (1.0/self.speed_multiplier.get())
+        return int(delay)
     
+
+    def _get_status_text(self) -> str:
+        """Returns the text to be displayed on top right for current lift status."""
+        status_text = (
+            f"Current Floor: {self.lift.current_floor}\n"
+            f"Direction: {self._gui_display_lift_direction(self.lift.direction)}\n"
+            f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
+            f"Onboard: {len(self.lift.onboard_requests)}\n"
+            f"Stopping: {"Yes" if self.lift.current_floor_stop else "No"}\n"
+        )
+        return status_text
+    
+
+    def _destroy_buttons_and_sliders(self) -> None:
+        """Destroys the different buttons and the speed slider at end of simulation."""
+        self.start_button.destroy()
+        self.add_requests_button.destroy()
+        self.speed_slider.destroy()
+
 
     def simulation_step(self):
         """Performs a simulation step and schedules the next one."""
@@ -193,22 +228,14 @@ class LiftSimulatorGUI:
             self._update_waiting_indicators() # update the little circles of people waiting on each floor
             
             # update status label (on the right) with current info
-            status_text = (
-                f"Current Floor: {self.lift.current_floor}\n"
-                f"Direction: {self._gui_display_lift_direction(self.lift.direction)}\n"
-                f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
-                f"Onboard: {len(self.lift.onboard_requests)}\n"
-                f"Stopping: {"Yes" if self.lift.current_floor_stop else "No"}\n"
-            )
+            status_text = self._get_status_text()
             self.status_label.config(text=status_text)
             
-            # next step after delay_ms milliseconds, depending on whether the lift needed to stop at current floor
-            delay_ms: int = (STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop) * (1.0/self.speed_multiplier.get())
-            self.master.after(int(delay_ms), self.simulation_step)
+            delay_ms = self._get_step_delay_ms()
+            self.master.after(delay_ms, self.simulation_step)
         else:
-            self.status_label.config(text="Simulation finished!\nPlease give us a first! <3")
-            self.start_button.destroy()
-            self.add_requests_button.destroy()
+            self.status_label.config(text=GUI_SIMULATION_FINISHED_TEXT)
+            self._destroy_buttons_and_sliders()
 
 
     def start_simulation(self):
