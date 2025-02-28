@@ -2,6 +2,7 @@ from enum import Enum
 
 from req_queue import ReqQueue
 from request import Request
+from request_simulator import simulate_requests
 
 class Direction(Enum):
     UP = "up"
@@ -166,6 +167,13 @@ class Lift:
         if not self.request_queue.get_requests() and not self.onboard_requests:
             self.direction = Direction.NONE
 
+
+    def _add_requests(self, n: int) -> None:
+        """This function adds n new requests for the lift."""
+        new_requests: list[Request] = simulate_requests(n, self.total_floors)
+        for req in new_requests:
+            self.request_queue.add_request(req)
+    
 
     def __repr__(self) -> str:
         return (f"Lift(current_floor={self.current_floor}, "
