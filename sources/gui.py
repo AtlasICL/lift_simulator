@@ -113,9 +113,10 @@ class LiftSimulatorGUI:
             command=self._update_speed_multiplier 
         )
         self.speed_slider.pack(pady=10)
+        self.speed_slider.config(state="disabled") # not active before start of simulation
 
     
-    def _update_lift_position(self):
+    def _update_lift_position(self) -> None:
         canvas_height = int(self.canvas["height"])
         canvas_width = int(self.canvas["width"])
         y = canvas_height - (self.lift.current_floor - 0.5) * self.floor_height # this gets the y coordinate for the lift rect
@@ -145,7 +146,7 @@ class LiftSimulatorGUI:
             self.canvas.coords(self.lift_text, (x1 + x2) // 2, y)
 
 
-    def _update_waiting_indicators(self):
+    def _update_waiting_indicators(self) -> None:
         """
         Draws little circles on each floor representing the number of waiting people,
         positioned so that they do not overlap the floor numbers.
@@ -195,7 +196,7 @@ class LiftSimulatorGUI:
     def _get_step_delay_ms(self) -> int:
         """Returns delay before next step in ms"""
         delay: float = (STEP_DELAY_MS + LIFT_STOP_DELAY_MS * self.lift.current_floor_stop) * (1.0/self.speed_multiplier.get())
-        return int(delay)
+        return int(delay) # number of ms (as an int)
     
 
     def _get_status_text(self) -> str:
@@ -217,7 +218,7 @@ class LiftSimulatorGUI:
         self.speed_slider.destroy()
 
 
-    def simulation_step(self):
+    def simulation_step(self) -> None:
         """Performs a simulation step and schedules the next one."""
         # the following if statement checks whether there is, either
         # at least 1 request still remaining, or at least 1 person still on the lift
@@ -238,7 +239,8 @@ class LiftSimulatorGUI:
             self._destroy_buttons_and_sliders()
 
 
-    def start_simulation(self):
+    def start_simulation(self) -> None:
         self.start_button.config(state="disabled") # should not be able to press start button once the simulation has been started
         self.add_requests_button.config(state="normal") # can now add new requests
+        self.speed_slider.config(state="normal") # can now change speed
         self.simulation_step()
