@@ -67,6 +67,7 @@ class LiftSimulatorGUI:
         self.__draw_building()
         self.lift_rect = None
     
+    
     def __draw_building(self):
         """Draw floor lines and labels on the canvas based on the current canvas width."""
         self.canvas.delete("floor")
@@ -143,9 +144,11 @@ class LiftSimulatorGUI:
                     fill="red", tags="waiting"
                 )
 
+
     def __gui_display_lift_direction(self, lift_direction) -> str:
         direction_display: dict = {Direction.UP: "up  ", Direction.DOWN : "down", Direction.NONE : "none"}
         return direction_display[lift_direction]
+
 
     def simulation_step(self):
         """Performs a simulation step and schedules the next one."""
@@ -173,6 +176,7 @@ class LiftSimulatorGUI:
         else:
             self.status_label.config(text="Simulation finished!\nPlease give us a first! <3")
             self.start_button.destroy()
+
 
     def start_simulation(self):
         self.start_button.config(state="disabled") # should not be able to press start button once the simulation has been started
