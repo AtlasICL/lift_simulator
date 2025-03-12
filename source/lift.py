@@ -27,7 +27,6 @@ class Lift:
         __init__()
         move()
         __repr__()
-
     """
 
     def __init__(self, total_floors: int, capacity: int):
@@ -81,7 +80,6 @@ class Lift:
     def _need_to_stop(self) -> bool:
         """Helper function which returns True if the lift needs to stop and open the doors at current floor"""
         # check if any onboard requests have reached their destination
-        # print(self.onboard_requests)
         for req in self.onboard_requests:
             if req.destination_floor == self.current_floor:
                 return True
@@ -94,36 +92,61 @@ class Lift:
     
     def _next_floor(self) -> int | None:
         """
-        This function determines which floor the lift should move to next. It achieves this by looking at the destinations of
-        onboard requests, and the origin floors of waiting requests. 
+        This function determines which floor the lift should move to next.
+        Implements an improved SCAN algorithm (also known as elevator algorithm or look algorithm).
         """
         candidates = self._get_candidate_floors()
-
+        
+        if not candidates:
+            self.direction = Direction.NONE
+            return None
+        
         if self.direction == Direction.NONE:
-            self.direction = Direction.UP # if the lift is idle, we arbitrarily set direction to up
-            # if there are no upward requests, the rest of this method will deal with it appropriately
-
-        # filter the candidates based on the direction of the lift
+            # If idle, choose direction based on closest request
+            up_candidates = [floor for floor in candidates if floor > self.current_floor]
+            down_candidates = [floor for floor in candidates if floor < self.current_floor]
+            
+            if up_candidates and down_candidates:
+                # Choose direction based on closest request
+                dist_up = min(up_candidates) - self.current_floor
+                dist_down = self.current_floor - max(down_candidates)
+                self.direction = Direction.UP if dist_up <= dist_down else Direction.DOWN
+            elif up_candidates:
+                self.direction = Direction.UP
+            elif down_candidates:
+                self.direction = Direction.DOWN
+            else:
+                # Current floor is a candidate
+                return self.current_floor
+        
+        # Process requests based on current direction
         if self.direction == Direction.UP:
+            # Get floors above current position
             next_up = self._filter_candidates(candidates, lambda x, y: x > y, min)
             if next_up is not None:
                 return next_up
-            # no one wants to go upwards (no valid up_candidates) so we switch direction
+                
+            # If no requests above, check for requests below (direction change)
             next_down = self._filter_candidates(candidates, lambda x, y: x < y, max)
             if next_down is not None:
-                self.direction = Direction.DOWN  # we switched direction, so we update self.direction
+                self.direction = Direction.DOWN
                 return next_down
         
         elif self.direction == Direction.DOWN:
+            # Get floors below current position
             next_down = self._filter_candidates(candidates, lambda x, y: x < y, max)
             if next_down is not None:
                 return next_down
-            # if no downward candidates were found, we switch direction to upwards
+                
+            # If no requests below, check for requests above (direction change)
             next_up = self._filter_candidates(candidates, lambda x, y: x > y, min)
             if next_up is not None:
-                self.direction = Direction.UP  # we switched direction, so we update self.direction
+                self.direction = Direction.UP
                 return next_up
-        return None  # if no candidates were valid, we return None and the lift goes idle
+        
+        # If we get here, there are no valid candidate floors
+        self.direction = Direction.NONE
+        return None
     
 
     def _offload_and_onload_requests(self) -> None:
