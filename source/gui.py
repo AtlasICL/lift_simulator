@@ -1,4 +1,7 @@
 import tkinter as tk
+from tkinter import filedialog, messagebox
+import json
+import os
 
 from lift import Lift
 from lift import Direction
@@ -71,9 +74,11 @@ class LiftSimulatorGUI:
         self.info_frame = tk.Frame(master)
         self.info_frame.pack(side="right", fill="y", padx=10, pady=10)
         
+        # Initialize lift_rect before drawing elements
+        self.lift_rect = None
+        
         # create and render all the visual elements
         self._draw_all_elements()
-        self.lift_rect = None
 
 
     def _draw_status_label(self) -> None:
@@ -116,6 +121,8 @@ class LiftSimulatorGUI:
         self._draw_add_requests_button()
         self._create_speed_slider()
         self._draw_building()
+        self._draw_lift()
+        self._update_status("Simulation not started yet.")
 
     
     def _create_speed_slider(self) -> None:
@@ -232,7 +239,17 @@ class LiftSimulatorGUI:
             f"People getting off: {"Yes" if self.lift.currently_offboarding else "No"}\n"
         )
         return status_text
-    
+
+
+    def _update_status(self, text: str) -> None:
+        """Updates the status label text."""
+        self.status_label.config(text=text)
+
+
+    def _draw_lift(self) -> None:
+        """Initialise the lift component."""
+        self._update_lift_position()
+
 
     def _destroy_buttons_and_sliders(self) -> None:
         """Destroys the different buttons and the speed slider at end of simulation."""
