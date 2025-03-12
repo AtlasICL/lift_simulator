@@ -134,7 +134,7 @@ This variable represents the occupancy ratio of the lift (how full it is) over t
 
 **Equations**  
 
-![metrics_formulae](metrics_formulae.png)
+![metrics_formulae](images/metrics_formulae.png)
 
 
 ### c) Testing methodology
@@ -159,4 +159,4 @@ The graphs generated from our data are available in the `results/charts/` direct
 
 # 4) Demo
 
-![Demo screenshot](demo.png)
+![Demo screenshot](images/demo.png)
