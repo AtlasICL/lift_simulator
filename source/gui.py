@@ -1,7 +1,4 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
-import json
-import os
 
 from lift import Lift
 from lift import Direction

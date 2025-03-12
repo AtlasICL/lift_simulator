@@ -2,7 +2,6 @@ from enum import Enum
 
 from req_queue import ReqQueue
 from request import Request
-from request_simulator import simulate_requests
 
 class Direction(Enum):
     UP = "up"
