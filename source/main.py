@@ -3,7 +3,7 @@ import os
 
 from gui import LiftSimulatorGUI
 
-CONFIG_FILEPATH: str = os.path.join("sources", "config.json") # filepath for config.json
+CONFIG_FILEPATH: str = os.path.join("source", "config.json") # filepath for config.json
 
 
 def main():
