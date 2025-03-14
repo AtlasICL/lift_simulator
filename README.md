@@ -162,4 +162,5 @@ The graphs generated from our data are available in the `results/charts/` direct
 
 # 4) Demo
 
-![Demo screenshot](images/demo.png)
+![Demo screenshot 1](images/demo_screenshots/demo1.png)
+![Demo screenshot 2](images/demo_screenshots/demo2.png)
