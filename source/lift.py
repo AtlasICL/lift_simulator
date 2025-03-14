@@ -101,22 +101,8 @@ class Lift:
             return None
         
         if self.direction == Direction.NONE:
-            # If idle, choose direction based on closest request
-            up_candidates = [floor for floor in candidates if floor > self.current_floor]
-            down_candidates = [floor for floor in candidates if floor < self.current_floor]
-            
-            if up_candidates and down_candidates:
-                # Choose direction based on closest request
-                dist_up = min(up_candidates) - self.current_floor
-                dist_down = self.current_floor - max(down_candidates)
-                self.direction = Direction.UP if dist_up <= dist_down else Direction.DOWN
-            elif up_candidates:
-                self.direction = Direction.UP
-            elif down_candidates:
-                self.direction = Direction.DOWN
-            else:
-                # Current floor is a candidate
-                return self.current_floor
+            # we arbitrarily assign UP, the next part of the function will deal appropriately
+            self.direction = Direction.UP
         
         # Process requests based on current direction
         if self.direction == Direction.UP:
