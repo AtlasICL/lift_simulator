@@ -1,6 +1,9 @@
 # Table of contents
 
 - ## [1) Project overview and features](#1-project-overview-and-features-1)
+    - [a) Overview](#a-overview)
+    - [b) Features](#b-features-implemented)
+    - [c) Assumptions / limitations](#c-assumptions-and-limitations)
 
 - ## [2) Usage instructions](#2-usage-instructions-1)
     - [a) Requirements](#a-requirements)
@@ -26,8 +29,16 @@
 
 # 1) Project overview and features
 
-### Features we implemented:
-- custom, efficient lift algorithm
+### a) Overview
+This project is a lift simulator.  
+In a building with a configurable number of floors, requests are made, and the lift moves appropriately to serve them.  
+
+### b) Features implemented
+- custom lift algorithm
+- configuration settings:
+    - custom number of floors in the building
+    - custom number of initial requests
+    - custom lift capacity
 - GUI:
     - real time status updates
     - visualisation for waiting requests
@@ -35,18 +46,13 @@
     - simulation speed slider
 - rigorous testing with random variables
 - graphs for performance analysis
-- custom configuration settings
 
 
-
-
-
-
-
-
-
-
-
+### c) Assumptions and limitations
+- floors are discrete: the lift "teleports" from one floor to the next
+- lift knows whether a request is upbound or downbound (this is realistic, one could imagine that when calling the lift you have 2 buttons)
+- it takes the same amount of time for 1 person to get off the lift as it does for 10 (this is more unrealistic, avenue for improvement in the future)
+- not implemented multiple lifts per building
 
 
 
@@ -55,10 +61,7 @@
 ## a) Requirements
 
 The project runs on Python 3.13.  
-The GUI (graphical user interface) requires the Python module tkinter. This library can be installed using 
-```
-pip install tk
-```
+The GUI (graphical user interface) requires the Python module tkinter. This library is included by default with Python.
 
 
 ## b) Configuration instructions
