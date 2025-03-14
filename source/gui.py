@@ -37,7 +37,7 @@ GUI_STATUS_TEXT_TITLE: str = "Lift Status"           # title for the status text
 GUI_STATUS_TEXT_FONT: str = GUI_DEFAULT_FONT         # text font for status text (set to default, Arial)
 GUI_STATUS_TEXT_FONT_SIZE: int = 14                  # text font size for status text
 
-GUI_SIMULATION_FINISHED_TEXT: str = "Simulation finished!\nPlease give us a first! <3"
+GUI_SIMULATION_FINISHED_TEXT: str = "Simulation finished!\n<3"
 
 
 class LiftSimulatorGUI:
@@ -227,6 +227,7 @@ class LiftSimulatorGUI:
     def _get_status_text(self) -> str:
         """Returns the text to be displayed on top right for current lift status."""
         status_text = (
+            f"----------- Status -----------\n\n"
             f"Current Floor: {self.lift.current_floor}\n"
             f"Direction: {self._gui_display_lift_direction(self.lift.direction)}\n"
             f"Waiting: {len(self.lift.request_queue.get_requests())}\n"
@@ -234,6 +235,7 @@ class LiftSimulatorGUI:
             f"Stopping: {"Yes" if self.lift.current_floor_stop else "No"}\n"
             f"People getting on: {"Yes" if self.lift.currently_onboarding else "No"}\n"
             f"People getting off: {"Yes" if self.lift.currently_offboarding else "No"}\n"
+            f"\n-------------------------------\n"
         )
         return status_text
 
