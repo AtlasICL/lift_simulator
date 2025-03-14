@@ -160,8 +160,7 @@ class Lift:
         for req in served_requests:
             self.onboard_requests.remove(req)
 
-        # we iterate over a COPY of the queue (.copy()) since we might modify it
-        waiting_requests = self.request_queue.get_requests().copy()
+        waiting_requests = self.request_queue.get_requests()
         for req in waiting_requests:
             if req.origin_floor == self.current_floor and not self._is_full():
                 self.onboard_requests.append(req) # add the request to list of onboard requests

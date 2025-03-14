@@ -31,7 +31,7 @@ class ReqQueue:
         self.requests = []
 
     def get_requests(self) -> list[Request]:
-        return self.requests
+        return self.requests.copy()
 
     def add_request(self, req: Request) -> None:
         self.requests.append(req)
