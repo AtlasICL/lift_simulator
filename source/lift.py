@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Callable
 
 from req_queue import ReqQueue
 from request import Request
@@ -64,7 +65,7 @@ class Lift:
         return candidate_floors
 
 
-    def _filter_candidates(self, candidates: list[int], compare, select) -> int | None:
+    def _filter_candidates(self, candidates: list[int], compare: Callable[[int, int], bool], select: Callable[[list[int]], int]) -> int | None:
         """
         Helper function to filter candidate requests in _next_floor() method.
         Retrurns the selected floor, or None if no valid candidate.
