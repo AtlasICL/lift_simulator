@@ -34,18 +34,18 @@ This project is a lift simulator.
 In a building with a configurable number of floors, requests are made, and the lift moves appropriately to serve them.  
 
 ### b) Features implemented
-- custom lift algorithm
+- [x] custom lift algorithm
 - configuration settings:
-    - custom number of floors in the building
-    - custom number of initial requests
-    - custom lift capacity
+    - [x] custom number of floors in the building
+    - [x] custom number of initial requests
+    - [x] custom lift capacity
 - GUI:
-    - real time status updates
-    - visualisation for waiting requests
-    - add requests in real time
-    - simulation speed slider
-- rigorous testing with random variables
-- graphs for performance analysis
+    - [x] real time status updates
+    - [x] visualisation for waiting requests
+    - [x] add requests in real time
+    - [x] simulation speed slider
+- [x] rigorous testing with random variables
+- [x] graphs for performance analysis
 
 
 ### c) Assumptions and limitations
