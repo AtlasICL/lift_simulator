@@ -157,10 +157,7 @@ The graphs generated from our data are available in the `results/charts/` direct
 
 
 
-
-
-
 # 4) Demo
 
-![Demo screenshot 1](images/demo_screenshots/demo1.png)
-![Demo screenshot 2](images/demo_screenshots/demo2.png)
+<img src="images/demo_screenshots/demo1.png" alt="Demo screenshot 1" width="500">
+<img src="images/demo_screenshots/demo2.png" alt="Demo screenshot 2" width="500">
