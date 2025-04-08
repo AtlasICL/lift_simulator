@@ -1,7 +1,7 @@
 import tkinter as tk
 import os
 
-from gui import LiftSimulatorGUI
+from source.simulation import LiftSimulatorGUI
 
 CONFIG_FILEPATH: str = os.path.join("source", "config.json") # filepath for config.json
 
